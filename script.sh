@@ -60,6 +60,6 @@ if [ [ans=="y"] ]; then
 	sudo systemctl start sshd
 fi
 
-# Local port forwarding for portmap rule
+# Local port forwarding for portmap rule, I have that in my .bashrc file
 sudo pacman -S socat -y
-#echo "alias ps='socat tcp-l:9999,reuseaddr,fork tcp:localhost:8100'"
+

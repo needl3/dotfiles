@@ -20,6 +20,9 @@ Exec=toggleConservationMode"
 echo $desContent > /home/$USER/.local/share/applications/ToggleBtteryMode.desktop
 mv assets/battery.png /home/$USER/.local/share/icons/
 
+# Initiate conservation mode
+toggleConservationMode
+
 
 # SSH Configuration
 echo "Do you want to configure openssh?(y/n)"
@@ -27,10 +30,10 @@ read ans
 if [ [ans=="y"] ]; then
 	
 	echo "[+] Installing ssh"
-	sudo pacman -S openssh -y
+	sudo pacman -S openssh --noconfirm
 	
-	echo "[+] Enabling ssh at system start"
-	sudo systemctl enable sshd
+	echo "[+] Not enabling ssh at system start."
+	#sudo systemctl enable sshd
 	
 	echo "[+] Generating secret keys"
 	ssh-keygen
@@ -61,5 +64,5 @@ if [ [ans=="y"] ]; then
 fi
 
 # Local port forwarding for portmap rule, I have that in my .bashrc file
-sudo pacman -S socat -y
+sudo pacman -S socat --noconfirm
 

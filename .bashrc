@@ -45,7 +45,11 @@ neofetch --disable memory gpu resolution colors
 
 # Local port forwarding for ssh
 sshfwd(){
+	# Grab ssh port from /etc/ssh/sshd_config
+	sshPort=$(cat /etc/ssh/sshd_config | sed -n 's/^Port //p')
+
 	# 9999 is my portmap.host or any relay server redirected port
-	socat tcp-l:9999,reuseaddr,fork tcp:localhost:8100 & 	
+	socat tcp-l:9999,reuseaddr,fork tcp:localhost:$sshPort & 	
 }
+
 

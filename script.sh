@@ -1,11 +1,11 @@
 #!/usr/bin/bash
 
-# Program killer using name
+# Program killer using name-----------------------------------------------------------
 # Usage: killProgram <process_name>
 echo "ps -A | grep $1 | xargs kill 2> /dev/null" > /usr/local/bin/killProgram
 chmod +x /usr/local/bin/killProgram
 
-# Conservation mode toggler
+# Conservation mode toggler------------------------------------------------------------
 g++ toggleConservation.cpp -o toggleConservationMode
 sudo chown root toggleConservationMode
 sudo chmod u+s toggleConservationMode
@@ -24,7 +24,23 @@ mv assets/battery.png /home/$USER/.local/share/icons/
 toggleConservationMode
 
 
-# SSH Configuration
+#Keyboard Backlight toggler(For Arch)--------------------------------------------------
+g++ toggleBacklight.cpp -o toggleBacklight
+sudo chown toggleBacklight
+sudo chmod u+s toggleBacklight
+mv toggleBacklight /usr/local/bin
+toggleBacklight
+
+desContent="[Desktop Entry]
+Name=Toggle Backlight
+Type=Application
+Icon=/home/$USER/.local/share/icons/rgb_keyboard.png
+Exec=toggleBacklight"
+echo $desContent > /home/$USER/.local/share/applications/ToggleBacklight.desktop
+mv assets/rgb_keyboard.png /home/$USER/.local/share/icons/
+
+
+# SSH Configuration---------------------------------------------------------------------
 echo "Do you want to configure openssh?(y/n)"
 read ans
 if [ [ans=="y"] ]; then
@@ -64,5 +80,4 @@ if [ [ans=="y"] ]; then
 fi
 
 # Local port forwarding for portmap rule, I have that in my .bashrc file
-sudo pacman -S socat --noconfirm
-
+sudo pacman -S socat openvpn burpsuite jre11-openjdk-headless --noconfirm

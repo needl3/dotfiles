@@ -11,51 +11,61 @@ sudo chown root toggleConservationMode
 sudo chmod u+s toggleConservationMode
 mv toggleConservationMode /usr/local/bin/
 
+# Create menu entry
 desContent="[Desktop Entry]
 Name=Toggle Battery Mode
 Type=Application
-Icon=/home/$USER/.local/share/icons/battery.png
+Icon=/home/$SUDO_USER/.local/share/icons/battery.png
 Exec=toggleConservationMode"
 
-echo $desContent > /home/$USER/.local/share/applications/ToggleBtteryMode.desktop
-mv assets/battery.png /home/$USER/.local/share/icons/
+echo $desContent > /home/$SUDO_USER/.local/share/applications/ToggleBtteryMode.desktop
+mkdir /home/$SUDO_USER/.local/share/icons
+cp assets/battery.png /home/$SUDO_USER/.local/share/icons/
 
 # Initiate conservation mode
 toggleConservationMode
 
-
-#Keyboard Backlight toggler(For Arch)--------------------------------------------------
+# Keyboard Backlight toggler(For Arch)--------------------------------------------------
 g++ toggleBacklight.cpp -o toggleBacklight
-sudo chown toggleBacklight
+sudo chown root toggleBacklight
 sudo chmod u+s toggleBacklight
 mv toggleBacklight /usr/local/bin
+
+# Turn the backlight on
 toggleBacklight
 
+# Create a menu entry
 desContent="[Desktop Entry]
 Name=Toggle Backlight
 Type=Application
-Icon=/home/$USER/.local/share/icons/rgb_keyboard.png
+Icon=/home/$SUDO_USER/.local/share/icons/rgb_keyboard.png
 Exec=toggleBacklight"
-echo $desContent > /home/$USER/.local/share/applications/ToggleBacklight.desktop
-mv assets/rgb_keyboard.png /home/$USER/.local/share/icons/
+
+echo $desContent > /home/$SUDO_USER/.local/share/applications/ToggleBacklight.desktop
+cp assets/rgb_keyboard.png /home/$SUDO_USER/.local/share/icons/
 
 
 # SSH Configuration---------------------------------------------------------------------
 echo "Do you want to configure openssh?(y/n)"
 read ans
-if [ [ans=="y"] ]; then
+if [ $ans = 'y' ]; then
 	
 	echo "[+] Installing ssh"
 	sudo pacman -S openssh --noconfirm
 	
-	echo "[+] Not enabling ssh at system start."
-	#sudo systemctl enable sshd
+	# echo "[+] Not enabling ssh at system start."
+	sudo systemctl enable sshd
+
+	# Preparing directories
+	mkdir /home/$SUDO_USER/.ssh
+
 	
 	echo "[+] Generating secret keys"
 	ssh-keygen
-	cat /home/$USER/.ssh/id_rsa.pub >> authorized_keys
-	rm /home/$USER/.ssh/id_rsa.pub
-	echo "Now move the /home/$USER/.ssh/id_rsa to a secure client machine"
+	cat /$USER/.ssh/id_rsa.pub > /home/$SUDO_USER/.ssh/authorized_keys
+	rm /$USER/.ssh/id_rsa.pub
+	mv /$USER/.ssh/id_rsa /home/$SUDO_USER/.ssh/
+	echo "Now move the /home/$SUDO_USER/.ssh/id_rsa to a secure client machine"
 
 	echo "Updating sshd configuration file"
 	sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
@@ -66,7 +76,7 @@ if [ [ans=="y"] ]; then
 		while : ; do
 			echo "Enter port number:"
 			read portNum
-			if grep -q "^.* $portNum" /etc/services; then
+			if timeout 1 bash -c "echo testing > /dev/tcp/google.com/$portNum"; then
 				echo "Port already in use. Enter another port."
 			else
 				sed -i "s/^#Port .*/Port $portNum/" sshd_config
@@ -74,10 +84,12 @@ if [ [ans=="y"] ]; then
 			fi
 		done
 	fi
-	sudo mv sshd_config /etc/ssh/sshd_config
+	sudo cp sshd_config /etc/ssh/sshd_config
 
 	sudo systemctl start sshd
+
+	echo "[+] SSH configuration success!"
 fi
 
 # Local port forwarding for portmap rule, I have that in my .bashrc file
-sudo pacman -S socat openvpn burpsuite jre11-openjdk-headless --noconfirm
+sudo pacman -S socat openvpn jre11-openjdk-headless --noconfirm

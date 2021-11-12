@@ -13,10 +13,9 @@ chmod +x /usr/local/bin/killProgram
 src_dir="src"
 
 # Conservation mode toggler------------------------------------------------------------
-g++ $(srd_dir)/toggleConservation.cpp -o toggleConservationMode
+g++ $(src_dir)/toggleConservation.cpp -o /usr/local/bin
 sudo chown root toggleConservationMode
 sudo chmod u+s toggleConservationMode
-mv $(srd_dir)/toggleConservationMode /usr/local/bin/
 
 # Create menu entry
 desContent="[Desktop Entry]
@@ -33,10 +32,9 @@ cp assets/battery.png /home/$SUDO_USER/.local/share/icons/
 toggleConservationMode
 
 # Keyboard Backlight toggler(For Arch)--------------------------------------------------
-g++ $(srd_dir)/toggleBacklight.cpp -o toggleBacklight
+g++ $(src_dir)/toggleBacklight.cpp -o /usr/local/bin
 sudo chown root toggleBacklight
 sudo chmod u+s toggleBacklight
-mv $(srd_dir)/toggleBacklight /usr/local/bin
 
 # Turn the backlight on
 toggleBacklight
@@ -64,7 +62,7 @@ if [ $ans = 'y' ]; then
 	sudo systemctl enable sshd
 
 	# Preparing directories
-	mkdir /home/$SUDO_USER/.ssh
+	mkdir /home/$SUDO_USER/.ssh 2> /dev/null
 
 	
 	echo "[+] Generating secret keys"
@@ -86,12 +84,11 @@ if [ $ans = 'y' ]; then
 			if timeout 1 bash -c "echo testing > /dev/tcp/google.com/$portNum"; then
 				echo "Port already in use. Enter another port."
 			else
-				sed -i "s/^#Port .*/Port $portNum/" sshd_config
+				sed -i "s/^#Port .*/Port $portNum/" /etc/ssh/sshd_config
 				break
 			fi
 		done
 	fi
-	sudo cp sshd_config /etc/ssh/sshd_config
 
 	sudo systemctl start sshd
 

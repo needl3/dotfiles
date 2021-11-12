@@ -1,15 +1,22 @@
 #!/usr/bin/bash
 
+cp .xinitrc /home/$SUDO_USER
+cp .bashrc /home/$SUDO_USER
+
+
 # Program killer using name-----------------------------------------------------------
 # Usage: killProgram <process_name>
 echo "ps -A | grep $1 | xargs kill 2> /dev/null" > /usr/local/bin/killProgram
 chmod +x /usr/local/bin/killProgram
 
+# Directory containing all source files
+src_dir="src"
+
 # Conservation mode toggler------------------------------------------------------------
-g++ toggleConservation.cpp -o toggleConservationMode
+g++ $(srd_dir)/toggleConservation.cpp -o toggleConservationMode
 sudo chown root toggleConservationMode
 sudo chmod u+s toggleConservationMode
-mv toggleConservationMode /usr/local/bin/
+mv $(srd_dir)/toggleConservationMode /usr/local/bin/
 
 # Create menu entry
 desContent="[Desktop Entry]
@@ -26,10 +33,10 @@ cp assets/battery.png /home/$SUDO_USER/.local/share/icons/
 toggleConservationMode
 
 # Keyboard Backlight toggler(For Arch)--------------------------------------------------
-g++ toggleBacklight.cpp -o toggleBacklight
+g++ $(srd_dir)/toggleBacklight.cpp -o toggleBacklight
 sudo chown root toggleBacklight
 sudo chmod u+s toggleBacklight
-mv toggleBacklight /usr/local/bin
+mv $(srd_dir)/toggleBacklight /usr/local/bin
 
 # Turn the backlight on
 toggleBacklight

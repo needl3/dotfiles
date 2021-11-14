@@ -1,4 +1,4 @@
-/* See LICENSE file for copyright and license details. */
+	/* See LICENSE file for copyright and license details. */
 /* Default settings; can be overriden by command line. */
 
 static int topbar = 1;                      /* -b  option; if 0, dmenu appears at bottom     */
@@ -29,3 +29,5 @@ static const unsigned int alphas[SchemeLast][2] = {
  * for example: " /?\"&[]"
  */
 static const char worddelimiters[] = " ";
+/* Size of the window border */
+static const unsigned int border_width = 5;

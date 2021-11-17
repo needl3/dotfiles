@@ -40,8 +40,7 @@ export LS_COLORS
 
 # Aliases with color
 alias ls=ls --color=auto
-
-neofetch --disable memory gpu resolution colors
+neofetch --config ~/.config/neofetch/config-bashrc.conf
 
 # Local port forwarding for ssh
 sshfwd(){
@@ -51,5 +50,3 @@ sshfwd(){
 	# 9999 is my portmap.host or any relay server redirected port
 	socat tcp-l:9999,reuseaddr,fork tcp:localhost:$sshPort & 	
 }
-
-

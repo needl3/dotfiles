@@ -5,8 +5,6 @@ usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
 
-dwmstatusbar_info=("" "" "" "" "")
-
 # Sleeping time for modules
 backlightsleep=10s
 memorysleep=5s
@@ -75,8 +73,8 @@ initializePulseAudio(){
 
 initializeMiscServices(){
     # Please save my eyes
-    # redshift -x
-    # redshift -O 4000
+    redshift -x
+    redshift -O 4000
 
     # Restore my waifu
     nitrogen --restore
@@ -85,45 +83,57 @@ initializeMiscServices(){
     # picom
 }
 
+getDate(){
+    printf "$(date +%I:%M\ %p)"
+}
+
 getBacklightStatus(){
-    dwmstatusbar_info[0]="\t$(cat /sys/class/backlight/intel_backlight/brightness)"
+    printf " $(cat /sys/class/backlight/intel_backlight/brightness)"
 }
 getCpuStatus(){
-    dwmstatusbar_info[1]="\t$(neofetch --disable --funcname cpu_usage | grep -o '[0-9]\{,\}')"
+    printf " $(neofetch --disable --funcname cpu_usage | grep -o '[0-9]\{,\}')"
 }
 getMemoryStatus(){
-    mem_info=$(neofetch --disable --funcname memory_usage | grep -o '[0-9]\{,\}')
-    dwmstatusbar_info[2]="\t`echo $mem_info | grep -o '^[0-9]*'`"
+    total=$(free -m | awk 'FNR == 2 {print $2}')
+    used=$(free -m | awk 'FNR == 2 {print $3}')
+    mem_info="$used/$total"
+    printf " $mem_info"
 }
 getNetworkStatus(){
-    dwmstatusbar_info[3]="$(cat /sys/class/backlight/intel_backlight/brightness)"
+    printf "  100  100"
 }
 getBatteryStatus(){
     icons=(    )
-    battery_percent=$(neofetch --disable --funcname battery | grep -o '[0-9]\{2,\}')
-    battery_icon=${icons[$(expr $battery_percent % 4)]}
-    dwmstatusbar_info[4]="$battery_icon\t$battery_percent"
+    battery_percent=$(cat /sys/class/power_supply/BAT1/capacity)
+    if grep -q Charging /sys/class/power_supply/BAT1/status;then
+        battery_icon=
+    else
+        battery_icon=${icons[$(expr $battery_percent % 4)]}
+    fi
+    printf "$battery_icon $battery_percent"
+}
+getTemperature(){
+    if [ $1 == "cpu" ]
+    then
+        printf "  `expr $(grep -o [0-9]* /sys/class/thermal/thermal_zone0/temp) / 1000`°C"
+    else
+        printf ""
+    fi
+}
+getVolume(){
+    vol_icons=(   )
+    vol_magnitude=$(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
+    printf "${vol_icons[$(expr $vol_magnitude % 3)]} $vol_magnitude"
 }
 
 updateStatusBar(){
-    getBatteryStatus
-    getNetworkStatus
-    getMemoryStatus
-    getCpuStatus
-    getBacklightStatus
-
-    statusbar=""
-    for i in $dwmstatusbar_info
-    do
-        statusbar+=$i
-        echo $statusbar
-    done
-
-
-    xsetroot -name $statusbar
-
+    xsetroot -name "| $(getBacklightStatus) | $(getVolume) | $(getCpuStatus) $(getTemperature cpu) | $(getMemoryStatus) | $(getNetworkStatus) | $(getBatteryStatus) | $(getDate)"
 }
-
+while :;
+do
+    updateStatusBar
+    sleep 5s
+done &
 
 # initializeNetwork &
 # initializePulseAudio &
@@ -136,7 +146,7 @@ updateStatusBar(){
 initializeMiscServices &
 
 # Start WM
-exec dwm
-#  while :; do
-#	dwm 2> ~/.dwm.log
-# done
+# exec dwm
+  while :; do
+ 	dwm 2> ~/.dwm.log
+ done

@@ -16,7 +16,7 @@ Magneta="\[\033[1;35m\]"
 if [[ ${EUID} == 0 ]] ; then
   main_col=$Red
 else
-  main_col=$Magneta
+  main_col=$Cyan
 fi
 
 function parse_git_branch() {
@@ -49,4 +49,8 @@ sshfwd(){
 
 	# 9999 is my portmap.host or any relay server redirected port
 	socat tcp-l:9999,reuseaddr,fork tcp:localhost:$sshPort & 	
+}
+
+f(){
+	find $1 -type f 2> /dev/null | grep $2
 }

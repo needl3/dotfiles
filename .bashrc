@@ -39,7 +39,9 @@ LS_COLORS='rs=0:di=01;36:ln=01;37:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:c
 export LS_COLORS
 
 # Aliases with color
-alias ls=ls --color=auto
+alias ls="ls --color"
+alias nf=neofetch
+
 neofetch --config ~/.config/neofetch/config-bashrc.conf
 
 # Local port forwarding for ssh

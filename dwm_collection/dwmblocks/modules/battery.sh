@@ -1,12 +1,22 @@
+#!/usr/bin/bash
 
 icons=(    )
 
-battery_percent=$(cat /sys/class/power_supply/BAT1/capacity)
+bat_dir="/sys/class/power_supply/BAT1"
 
-if grep -q Charging /sys/class/power_supply/BAT1/status;then
-    battery_icon=
-else
-    battery_icon=${icons[$(expr $battery_percent % 4)]}
-fi
+battery_percent=$(cat $bat_dir/capacity)
+
+case $(cat $bat_dir/status) in
+    "Unknown")
+        battery_icon=🔋;;
+    
+    "Discharging")
+        battery_icon=${icons[$(expr $battery_percent % 4)]};;
+    
+    "Charging")
+        battery_icon=⚡;;
+    *)
+        battery_icon=🚫;;
+esac
 
 printf "$battery_icon $battery_percent"

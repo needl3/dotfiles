@@ -5,13 +5,6 @@ usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
 
-# Sleeping time for modules
-backlightsleep=10s
-memorysleep=5s
-cpusleep=5s
-batterysleep=1m
-networksleep=5s
-
 # merge in defaults and keymaps
 
 if [ -f $sysresources ]; then
@@ -68,7 +61,7 @@ initializeNetwork(){
     dhcpcd wlan0
 }
 initializePulseAudio(){
-    pulseaudio --start
+    pulseaudio -D
 }
 
 initializeMiscServices(){
@@ -82,66 +75,6 @@ initializeMiscServices(){
     # Start compositor
     # picom
 }
-
-getDate(){
-    printf "$(date +%I:%M\ %p)"
-}
-
-getBacklightStatus(){
-    printf " $(cat /sys/class/backlight/intel_backlight/brightness)"
-}
-getCpuStatus(){
-    printf " $(neofetch --disable --funcname cpu_usage | grep -o '[0-9]\{,\}')"
-}
-getMemoryStatus(){
-    total=$(free -m | awk 'FNR == 2 {print $2}')
-    used=$(free -m | awk 'FNR == 2 {print $3}')
-    mem_info="$used/$total"
-    printf " $mem_info"
-}
-getNetworkStatus(){
-    printf "  100  100"
-}
-getBatteryStatus(){
-    icons=(    )
-    battery_percent=$(cat /sys/class/power_supply/BAT1/capacity)
-    if grep -q Charging /sys/class/power_supply/BAT1/status;then
-        battery_icon=
-    else
-        battery_icon=${icons[$(expr $battery_percent % 4)]}
-    fi
-    printf "$battery_icon $battery_percent"
-}
-getTemperature(){
-    if [ $1 == "cpu" ]
-    then
-        printf "  `expr $(grep -o [0-9]* /sys/class/thermal/thermal_zone0/temp) / 1000`°C"
-    else
-        printf ""
-    fi
-}
-getVolume(){
-    vol_icons=(   )
-    vol_magnitude=$(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
-    printf "${vol_icons[$(expr $vol_magnitude % 3)]} $vol_magnitude"
-}
-
-updateStatusBar(){
-    xsetroot -name "| $(getBacklightStatus) | $(getVolume) | $(getCpuStatus) $(getTemperature cpu) | $(getMemoryStatus) | $(getNetworkStatus) | $(getBatteryStatus) | $(getDate)"
-}
-while :;
-do
-    updateStatusBar
-    sleep 5s
-done &
-
-# initializeNetwork &
-# initializePulseAudio &
-# while :;
-# do
-# 	updateStatusBar
-#     sleep 5s
-# done &
 
 initializeMiscServices &
 

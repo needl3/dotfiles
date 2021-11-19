@@ -1,0 +1,1 @@
+printf "$(date +%I:%M\ %p)"

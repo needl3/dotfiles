@@ -1,17 +1,25 @@
 #!/usr/bin/bash
 
 # All pacman packages to install
-packages_pacman=(socat openvpn qterminal xorg-xsetroot, neofetch, htop)
+packages_pacman=(socat openvpn qterminal xorg-xsetroot, neofetch, htop, xorg-xev xbindkeys xorg-xbacklight)
 
 # All yay packages to install
 packages_yay = ()
 
 # Directory containing all source files
 src_dir="src"
+dest_dir="/usr/local/bin"
 
 placeFiles(){
 	cp .xinitrc /home/$SUDO_USER
 	cp .bashrc /home/$SUDO_USER
+	cp .Xmodmap /home/$SUDO_USER
+}
+
+configureBrightnessModifier(){
+	g++ $src_dir/changeBacklight.cpp -o $dest_dir/changeBacklight
+	sudo chown root $dest_dir/changeBacklight
+	sudo chmod u+s $dest_dir/changeBacklight
 }
 
 configureKiller(){
@@ -23,9 +31,9 @@ configureKiller(){
 
 configureConservationMode(){
 	# Conservation mode toggler------------------------------------------------------------
-	g++ $(src_dir)/toggleConservation.cpp -o /usr/local/bin
-	sudo chown root toggleConservationMode
-	sudo chmod u+s toggleConservationMode
+	g++ $(src_dir)/toggleConservation.cpp -o $dest_dir/toggleConservationMode
+	sudo chown root $dest_dir/toggleConservationMode
+	sudo chmod u+s $dest_dir/toggleConservationMode
 
 	# Create menu entry
 	desContent="[Desktop Entry]
@@ -43,9 +51,9 @@ configureConservationMode(){
 }
 configureBacklight(){
 	# Keyboard Backlight toggler(For Arch)--------------------------------------------------
-	g++ $(src_dir)/toggleBacklight.cpp -o /usr/local/bin
-	sudo chown root toggleBacklight
-	sudo chmod u+s toggleBacklight
+	g++ $(src_dir)/toggleBacklight.cpp -o $dest_dir/toggleBacklight
+	sudo chown root $dest_dir/toggleBacklight
+	sudo chmod u+s $dest_dir/toggleBacklight
 
 	# Turn the backlight on
 	toggleBacklight
@@ -107,10 +115,15 @@ configureSSH(){
 	fi
 }
 
+
+#######################
+# Running Functions   #
+#######################
 placeFiles
 configureKiller
 configureConservationMode
 configureBacklight
+configureBrightnessModifier
 configureSSH
 
 # Local port forwarding for portmap rule, I have that in my .bashrc file

@@ -1,5 +1,5 @@
 
-icon=
+icon=🛠
 
 updates=$(pacman -Qu | wc -l)
 

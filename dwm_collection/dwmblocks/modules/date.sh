@@ -1,1 +1,1 @@
-printf "$(date +%I:%M\ %p)"
+printf "📅 $( date +%I:%M\ %p)"

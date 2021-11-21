@@ -1,0 +1,36 @@
+# Increase volume
+"pactl set-sink-volume @DEFAULT_SINK@ +2000"
+   XF86AudioRaiseVolume
+
+# Decrease volume
+"pactl set-sink-volume @DEFAULT_SINK@ -2000"
+   XF86AudioLowerVolume
+
+# Mute volume
+"pactl set-sink-mute @DEFAULT_SINK@ toggle"
+   XF86AudioMute
+
+# Mute microphone
+"pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+   XF86AudioMicMute
+
+# Increase Brightness
+"changeBacklight --inc 5"
+	XF86MonBrightnessUp
+
+# Decrease Brightness
+"changeBacklight --dec 5"
+	XF86MonBrightnessDown
+
+#Capture full screen
+"flameshot screen -c"
+   Print
+
+"flameshot gui"
+   Control+Print
+
+"flameshot screen -p ~/Pictures/Screenshots && sleep 2 && killall flameshot"
+   Alt+Print
+
+"toggleBacklight"
+   Scroll_Lock

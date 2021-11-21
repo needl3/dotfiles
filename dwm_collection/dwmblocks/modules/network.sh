@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
-upicon=
-downicon=
+upicon=🔺
+downicon=🔻
 
 upinfo=
 downinfo=

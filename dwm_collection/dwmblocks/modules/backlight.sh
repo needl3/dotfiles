@@ -1,6 +1,11 @@
 
-icon=
+icon=💡
 
 info=$(cat /sys/class/backlight/intel_backlight/brightness)
 
-printf "$icon $info"
+if [ $(( $info / 900  )) ]
+then
+	info=100
+fi
+
+printf "$icon $info%%"

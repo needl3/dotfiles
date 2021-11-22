@@ -19,17 +19,18 @@ static const char col_gray1[]       = "#080808";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#bbbbbb";
-static const char col_purple1[]     = "#280080";
+static const char col_purple1[]     = "#3c1d63";
+static const char col_purple2[]     = "#673c9e";
 static const char col_cyan[]        = "#008080";
 static const char *colors[][3]      = {
 	/*               			fg 		        bg  	       border   */
-	[SchemeNorm] 		= 	{ col_gray3,	 col_gray1, 	col_gray2 },
-	[SchemeSel]  		= 	{ col_gray4,	 "#000000",  	col_cyan  },
-	[SchemeStatus]  	= 	{ "#ffffff",	 col_gray1,  	"#111111"  }, // Statusbar right {text,background,not used but cannot be empty}
-	[SchemeTagsSel]  	= 	{ col_gray4,	 col_purple1,  	"#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
-    [SchemeTagsNorm]  	= 	{ "#ffffff",	 col_gray1,  	"#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-    [SchemeInfoSel]  	= 	{ "#ffffff",	 col_cyan,  	"#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
-    [SchemeInfoNorm]  	= 	{ col_gray3,	 col_gray1,  	"#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
+	[SchemeNorm] 		= 	{ col_gray3,	 col_purple2, 	col_purple1 },
+	[SchemeSel]  		= 	{ col_gray4,	 col_purple1,  	col_cyan  },
+	[SchemeStatus]  	= 	{ "#ffffff",	 col_purple2,  	"#111111"  }, // Statusbar right {text,background,not used but cannot be empty}
+	[SchemeTagsSel]  	= 	{ "#68f53d",	 col_purple1,  	"#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
+    [SchemeTagsNorm]  	= 	{ "#ffffff",	 col_purple2,  	"#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
+    [SchemeInfoSel]  	= 	{ "#ffffff",	 "#320e45",  	"#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
+    [SchemeInfoNorm]  	= 	{ col_gray3,	 col_purple2,  	"#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 
 /* tagging */
@@ -88,7 +89,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static char dmenulist[4] = "10";
 static const char *dmenucmd[] = { "dmenu_run","-c", "-l", dmenulist, "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "qterminal", NULL };
+static const char *termcmd[]  = { "st", NULL };
 
 /* commands spawned when clicking statusbar, the mouse button pressed is exported as BUTTON */
 //static const dblocks_script_dir[] = "/opt/dblocks"

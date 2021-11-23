@@ -1,5 +1,5 @@
 
-icon=
+icon=💾
 
 total=$(free -m | awk 'FNR == 2 {print $2}')
 

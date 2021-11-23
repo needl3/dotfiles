@@ -1,23 +1,10 @@
-From 4fe51382497027e90602a52174e84ed550112fd7 Mon Sep 17 00:00:00 2001
-From: Jack Halford <jack@0x5.be>
-Date: Sun, 25 Oct 2020 19:19:24 +0100
-Subject: [PATCH] patch: alpha (fixes qutebrowser crash)
-
----
- config.h  |  8 ++++++++
- config.mk |  2 +-
- dmenu.c   | 56 +++++++++++++++++++++++++++++++++++++++++++++++++++----
- drw.c     | 27 +++++++++++++++------------
- drw.h     |  9 ++++++---
- 5 files changed, 82 insertions(+), 20 deletions(-)
-
-diff --git a/config.h b/config.h
-index b482970..843e76e 100644
---- a/config.h
-+++ b/config.h
+diff --git a/config.def.h b/config.def.h
+index 1edb647..89f9035 100644
+--- a/config.def.h
++++ b/config.def.h
 @@ -6,6 +6,8 @@ static int topbar = 1;                      /* -b  option; if 0, dmenu appears a
  static const char *fonts[] = {
- 	"Liberation Mono:pixelsize=14"
+ 	"monospace:size=10"
  };
 +static const unsigned int bgalpha = 0xe0;
 +static const unsigned int fgalpha = OPAQUE;
@@ -38,7 +25,7 @@ index b482970..843e76e 100644
  /*
   * Characters not considered part of a word while deleting words
 diff --git a/config.mk b/config.mk
-index 5b0b932..5b53d5f 100644
+index 05d5a3e..8531fb9 100644
 --- a/config.mk
 +++ b/config.mk
 @@ -20,7 +20,7 @@ FREETYPEINC = /usr/include/freetype2
@@ -51,7 +38,7 @@ index 5b0b932..5b53d5f 100644
  # flags
  CPPFLAGS = -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE=700 -D_POSIX_C_SOURCE=200809L -DVERSION=\"$(VERSION)\" $(XINERAMAFLAGS)
 diff --git a/dmenu.c b/dmenu.c
-index 7c370de..bc8a09e 100644
+index 98507d9..cf4c6cb 100644
 --- a/dmenu.c
 +++ b/dmenu.c
 @@ -25,6 +25,8 @@
@@ -63,7 +50,7 @@ index 7c370de..bc8a09e 100644
  /* enums */
  enum { SchemeNorm, SchemeSel, SchemeOut, SchemeLast }; /* color schemes */
  
-@@ -53,6 +55,10 @@ static Window root, parentwin, win;
+@@ -51,6 +53,10 @@ static Window root, parentwin, win;
  static XIC xic;
  
  static Drw *drw;
@@ -74,7 +61,7 @@ index 7c370de..bc8a09e 100644
  static Clr *scheme[SchemeLast];
  
  #include "config.h"
-@@ -60,6 +66,45 @@ static Clr *scheme[SchemeLast];
+@@ -58,6 +64,45 @@ static Clr *scheme[SchemeLast];
  static int (*fstrncmp)(const char *, const char *, size_t) = strncmp;
  static char *(*fstrstr)(const char *, const char *) = strstr;
  
@@ -120,7 +107,7 @@ index 7c370de..bc8a09e 100644
  static void
  appenditem(struct item *item, struct item **list, struct item **last)
  {
-@@ -691,7 +736,7 @@ setup(void)
+@@ -613,7 +658,7 @@ setup(void)
  #endif
  	/* init appearance */
  	for (j = 0; j < SchemeLast; j++)
@@ -129,7 +116,7 @@ index 7c370de..bc8a09e 100644
  
  	clip = XInternAtom(dpy, "CLIPBOARD",   False);
  	utf8 = XInternAtom(dpy, "UTF8_STRING", False);
-@@ -747,10 +792,12 @@ setup(void)
+@@ -669,10 +714,12 @@ setup(void)
  	/* create menu window */
  	swa.override_redirect = True;
  	swa.background_pixel = scheme[SchemeNorm][ColBg].pixel;
@@ -144,7 +131,7 @@ index 7c370de..bc8a09e 100644
  	XSetClassHint(dpy, win, &ch);
  
  
-@@ -839,7 +886,8 @@ main(int argc, char *argv[])
+@@ -758,7 +805,8 @@ main(int argc, char *argv[])
  	if (!XGetWindowAttributes(dpy, parentwin, &wa))
  		die("could not get embedding window attributes: 0x%lx",
  		    parentwin);
@@ -272,5 +259,3 @@ index 4c67419..4f66f0d 100644
  
  /* Cursor abstraction */
  Cur *drw_cur_create(Drw *drw, int shape);
--- 
-2.32.0

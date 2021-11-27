@@ -23,14 +23,17 @@
 	XF86MonBrightnessDown
 
 #Capture full screen
-"flameshot screen -c"
+"gscreenshot -s -c"
    Print
 
-"flameshot gui"
+"gscreenshot -c"
    Control+Print
 
-"flameshot screen -p ~/Pictures/Screenshots && sleep 2 && killall flameshot"
+"gscreenshot -c -f ~/Pictures/screenshot/"
    Alt+Print
 
 "toggleBacklight"
    Scroll_Lock
+
+"st ranger"
+   F5

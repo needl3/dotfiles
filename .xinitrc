@@ -25,11 +25,16 @@ initializeMiscServices(){
     nitrogen --restore
 
     # Start compositor
-    picom
+    picom -b
 
     dwmblocks &
 
-    xbindkeys &
+    xbindkeys -f ~/.xbindkeysrc &
+
+    xmodmap .Xmodmap &
+
+    dunst &
+
 }
 
 initializeMiscServices &

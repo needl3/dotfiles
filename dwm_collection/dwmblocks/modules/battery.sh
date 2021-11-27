@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-icons=(    )
+icons=(🪫    )
 
 bat_dir="/sys/class/power_supply/BAT1"
 
@@ -11,7 +11,19 @@ case $(cat $bat_dir/status) in
         battery_icon=🔋;;
     
     "Discharging")
-        battery_icon=${icons[$(expr $battery_percent % 4)]};;
+        battery_icon=${icons[$(expr $battery_percent % 4)]}
+        if [ $battery_percent -lt 20 ]
+        then
+            notify-send "Low battery!
+            Computer will shutdown at 15%" -u critical
+
+            if [ $battery_percent -lt 15 ]
+            then
+                shutdown +1
+            fi
+
+        fi
+        ;;
     
     "Charging")
         battery_icon=⚡;;
@@ -19,4 +31,4 @@ case $(cat $bat_dir/status) in
         battery_icon=🚫;;
 esac
 
-printf "$battery_icon $battery_percent"
+printf "$battery_icon$battery_percent"

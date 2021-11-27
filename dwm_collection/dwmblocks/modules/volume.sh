@@ -16,4 +16,4 @@ case $( pactl info | awk 'FNR==13 {print $3}' | xargs pactl get-sink-mute | awk 
 		icon=🔇;;
 esac
 
-printf "$icon $vol_magnitude%%"
+printf "$icon$vol_magnitude%%"

@@ -10,4 +10,4 @@ else
 	info=$(( $info / 10 ))
 fi
 
-printf "$icon $info%%"
+printf "$icon$info%%"

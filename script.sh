@@ -1,10 +1,13 @@
 #!/usr/bin/bash
 
 # All pacman packages to install
-packages_pacman=(socat openvpn qterminal xorg-xsetroot, neofetch, htop, xorg-xev xbindkeys xorg-xbacklight)
+packages_pacman=(socat openvpn xorg-xsetroot neofetch htop xorg-xev xbindkeys gscreenshot mpd nncmpp)
 
 # All yay packages to install
 packages_yay = ()
+
+# All system services to enable
+services=(mpd iwd dhcpcd)
 
 # Directory containing all source files
 src_dir="src"
@@ -127,4 +130,9 @@ configureBrightnessModifier
 configureSSH
 
 # Local port forwarding for portmap rule, I have that in my .bashrc file
+
+# Install all dependencies
 sudo pacman -Syyu ${packages_pacman[@]} --noconfirm
+
+# Enable all services
+sudo systemctl enable ${services[@]}

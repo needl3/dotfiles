@@ -2,11 +2,14 @@
 
 # Choose appropriate icon
 icon=
-if ip a | grep wlan0 | grep DOWN > /dev/null;then
+
+interface=$(ip a list | awk 'FNR==9 {print $2}' | grep -o '[a-z1-9]*')
+
+if ip a | grep $interface | grep DOWN > /dev/null;then
 	icon=🚫
-elif ! ip a | grep wlan0 | grep inet > /dev/null;then
+elif ! ip a | grep $interface | grep inet > /dev/null;then
 	icon=📡
-elif iwctl station wlan0 show | grep Connected > /dev/null;then
+elif iwctl station $interface show | grep Connected > /dev/null;then
 	icon=💚
 fi
 

@@ -1,0 +1,71 @@
+* {
+  font: "NotoMono Nerd Font 12.5";
+  width: 600px;
+  
+  bg: #000000;
+  bg-alt: #18181880;
+  fg: #FFFFFF;
+  fg-alt: #333333;
+
+  border: 0;
+  margin: 0;
+  padding: 0;
+  spacing: 0;
+}
+
+window {
+  background-color: #00000000;
+  transparency: "real";
+}
+
+mainbox {
+  background-color: #00000000;
+  children: [inputbar, listview];
+}
+
+inputbar {
+  background-color: @bg-alt;
+  text-color: @fg;
+  children: [prompt, entry];
+}
+
+prompt {
+  enabled: true;
+  text-color: inherit;
+  background-color: inherit;
+  padding: 12;
+}
+
+entry {
+  text-color: inherit;
+  background-color: inherit;
+  padding: 12;
+}
+
+listview {
+  columns: 1;
+  lines: 7;
+  cycle: false;
+  dynamic: true;
+  background-color: @bg;
+  children: [element];
+}
+
+element {
+  padding: 12;
+  background-color: inherit;
+  children: [element-icon, element-text];
+}
+
+element-icon {
+  background-color: inherit;
+}
+
+element-text {
+  text-color: @fg-alt;
+  background-color: inherit;
+}
+
+element-text selected {
+  text-color: @fg;
+}

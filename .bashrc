@@ -50,7 +50,7 @@ sshfwd(){
 	sshPort=$(cat /etc/ssh/sshd_config | sed -n 's/^Port //p')
 
 	# 9999 is my portmap.host or any relay server redirected port
-	socat tcp-l:9999,reuseaddr,fork tcp:localhost:$sshPort & 	
+	socat tcp-l:6999,reuseaddr,fork tcp:localhost:$sshPort &
 }
 
 f(){

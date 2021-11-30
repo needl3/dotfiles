@@ -13,24 +13,29 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const int vertpad            = 0;       /* vertical padding of bar */
 static const int sidepad            = 0;       /* horizontal padding of bar */
 static const int user_bh            = 0;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+
 static const char *fonts[]          = { "monospace:size=12", "JoyPixels:pixelsize=12:" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font;style=15";
-static const char col_gray1[]       = "#080808";
+
+static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#bbbbbb";
+static const char col_gray3[]       = "#666666";
+static const char col_gray4[]       = "#888888";
 static const char col_purple1[]     = "#3c1d63";
 static const char col_purple2[]     = "#673c9e";
-static const char col_cyan[]        = "#008080";
+static const char col_cyan[]        = "#222222";
+static const char col_black[] 		= "#000000";
+static const char col_white[] 		= "#ffffff";
+
 static const char *colors[][3]      = {
 	/*               			fg 		        bg  	       border   */
-	[SchemeNorm] 		= 	{ col_gray3,	 col_purple2, 	col_purple1 },
-	[SchemeSel]  		= 	{ col_gray4,	 col_purple1,  	col_cyan  },
-	[SchemeStatus]  	= 	{ "#ffffff",	 col_purple2,  	"#111111"  }, // Statusbar right {text,background,not used but cannot be empty}
-	[SchemeTagsSel]  	= 	{ "#68f53d",	 col_purple1,  	"#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
-    [SchemeTagsNorm]  	= 	{ "#ffffff",	 col_purple2,  	"#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-    [SchemeInfoSel]  	= 	{ "#ffffff",	 "#320e45",  	"#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
-    [SchemeInfoNorm]  	= 	{ col_gray3,	 col_purple2,  	"#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
+	[SchemeNorm] 		= 	{ col_gray3,	 col_purple2, 	col_black  },
+	[SchemeSel]  		= 	{ col_gray4,	 col_purple1,  	col_black  },
+	[SchemeStatus]  	= 	{ col_white,	 col_gray1,  	col_black  }, // Statusbar right {text,background,not used but cannot be empty}
+	[SchemeTagsSel]  	= 	{ col_white,	 col_gray1,  	col_black  }, // Tagbar left selected {text,background,not used but cannot be empty}
+    [SchemeTagsNorm]  	= 	{ col_white,	 col_gray2,  	col_black  }, // Tagbar left unselected {text,background,not used but cannot be empty}
+    [SchemeInfoSel]  	= 	{ col_white	,	 col_gray1,  	col_black  }, // infobar middle  selected {text,background,not used but cannot be empty}
+    [SchemeInfoNorm]  	= 	{ col_gray3,	 col_gray2,  	col_black  }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 
 /* tagging */
@@ -130,7 +135,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_h,      setcfact,       {.f = +0.25} },
 	{ MODKEY|ShiftMask,             XK_l,      setcfact,       {.f = -0.25} },
 	{ MODKEY|ShiftMask,             XK_o,      setcfact,       {.f =  0.00} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
+	{ MODKEY|ShiftMask,				XK_Escape, zoom,           {0} },
 	{ MODKEY|Mod4Mask,              XK_u,      incrgaps,       {.i = +1 } },
 	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,      incrgaps,       {.i = -1 } },
 	{ MODKEY|Mod4Mask,              XK_i,      incrigaps,      {.i = +1 } },
@@ -153,8 +158,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_s,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_c,      setlayout,      {.v = &layouts[11]} },
-//	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	{ MODKEY,                       XK_space,  setlayout,      {0} },
+//	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },

@@ -29,18 +29,20 @@ initializeMiscServices(){
 
     dwmblocks &
 
-    xbindkeys -f ~/.xbindkeysrc &
+    xbindkeys -f ~/.xbindkeysrc 
 
-    xmodmap .Xmodmap &
+    xmodmap .Xmodmap 
 
     dunst &
+
+    # For flameshot daemon
+    flameshot &
 
 }
 
 initializeMiscServices &
 
 # Start WM
-# exec dwm
-  while :; do
-    dwm 2> ~/.dwm.log
- done
+while :; do
+	dwm 2> ~/.dwm.log
+done

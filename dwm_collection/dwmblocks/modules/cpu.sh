@@ -1,9 +1,5 @@
-#!/usr/bin/bash
-
-icon=🧠
-
-info=$(expr $(neofetch --disable --funcname cpu_usage | grep -o '[0-9]\{,\}') / 4)
-
-temp=$($(dirname "$0")/cpu_temp.sh)
-
-printf "$icon$info%% $temp"
+#!/bin/bash
+case $BUTTON in
+	1) notify-send "CPU usage" "$(ps axch -o cmd,%cpu --sort=-%cpu | head)" ;;
+	3) st -e htop ;;
+esac

@@ -5,14 +5,13 @@ interface=$(ip a list | awk 'FNR==9 {print $2}' | grep -o '[a-z0-9]*')
 connect(){
 	notify-send "Opening Connection Instance"
 	iwctl station $interface scan
-	st bash -c "\
+	echo Scanning for WiFi Networks.....
+	sleep 1
+	st "\
 	clear;\
-	echo Scanning for WiFi Networks.....;\
 	sleep 1;\
-	read ssid;\
-	iwctl station $interface connect $ssid;\
+	read -t 60;\
 	"&
-	disown
 	sleep 1
 	max=0
 	for i in $(ls /dev/pts)
@@ -23,8 +22,19 @@ connect(){
 	    max=$i
 	  fi
 	done
-	iwctl station wlan0 get-networks > /dev/pts/$max;
+	iwctl station $interface get-networks > /dev/pts/$max;
 	echo "Enter WiFi Name to connect to" > /dev/pts/$max
+	ssid=$(</dev/pts/$max)
+
+	if iwctl station $interface show | grep disconnected;then
+		iwctl station $interface disconnect
+	fi
+
+	if [ ! $(iwctl station $interface connect $ssid) ];then
+		notify-send "Connected to WiFi network" "$ssid"
+	else
+		notify-send "Coundn't connect to WiFi Network" "$ssid"
+	fi
 }
 sendNotification(){
 	if ! ip a | grep $interface | grep inet > /dev/null;then

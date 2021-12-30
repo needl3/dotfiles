@@ -1,4 +1,22 @@
 #!/usr/bin/bash
+findActiveInterface()
+{
+	intfr=
+	for i in $( ip a list | grep BROADCAST | awk '{print $2}' | grep -o 'wlan[0-9]*');
+	do
+		if iwctl station $i show | grep disconnected > /dev/null;then
+			continue
+		else
+			intfr=$i
+		fi
+	done
+	if [ -z $intfr ];then
+		intfr=wlan0
+	fi
+	printf $intfr
+}
+
+interface=$(findActiveInterface)
 
 upicon=🔺
 downicon=🔻
@@ -21,7 +39,7 @@ fi
 #####################
 
 prev_B=$(cat /tmp/rx)
-current_B=$(cat /sys/class/net/wlan0/statistics/rx_bytes)
+current_B=$(cat /sys/class/net/$interface/statistics/rx_bytes)
 
 echo $current_B > /tmp/rx
 
@@ -39,7 +57,7 @@ fi
 #	Upload Speed	#
 #####################
 prev_B=$(cat /tmp/tx)
-current_B=$(cat /sys/class/net/wlan0/statistics/tx_bytes)
+current_B=$(cat /sys/class/net/$interface/statistics/tx_bytes)
 
 echo $current_B > /tmp/tx
 

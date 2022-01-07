@@ -17,26 +17,7 @@ static const int user_bh            = 0;        /* 0 means that dwm will calcula
 static const char *fonts[]          = { "monospace:size=12", "JoyPixels:pixelsize=12:" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font;style=15";
 
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#666666";
-static const char col_gray4[]       = "#888888";
-static const char col_purple1[]     = "#3c1d63";
-static const char col_purple2[]     = "#673c9e";
-static const char col_cyan[]        = "#222222";
-static const char col_black[] 		= "#000000";
-static const char col_white[] 		= "#ffffff";
-
-static const char *colors[][3]      = {
-	/*               			fg 		        bg  	       border   */
-	[SchemeNorm] 		= 	{ col_gray3,	 col_purple2, 	col_black  },
-	[SchemeSel]  		= 	{ col_gray4,	 col_purple1,  	col_black  },
-	[SchemeStatus]  	= 	{ col_white,	 col_gray1,  	col_black  }, // Statusbar right {text,background,not used but cannot be empty}
-	[SchemeTagsSel]  	= 	{ col_white,	 col_gray1,  	col_black  }, // Tagbar left selected {text,background,not used but cannot be empty}
-    [SchemeTagsNorm]  	= 	{ col_white,	 col_gray2,  	col_black  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-    [SchemeInfoSel]  	= 	{ col_white	,	 col_gray1,  	col_black  }, // infobar middle  selected {text,background,not used but cannot be empty}
-    [SchemeInfoNorm]  	= 	{ col_gray3,	 col_gray2,  	col_black  }, // infobar middle  unselected {text,background,not used but cannot be empty}
-};
+#include "../dwmbar/DwmbarThemes.h"
 
 /* tagging */
 static const char *tags[] = { "💻", "🐚", "🌏", "🎶", "📺", "💬"};

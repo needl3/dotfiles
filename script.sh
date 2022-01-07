@@ -2,7 +2,7 @@
 
 # All pacman packages to install
 packages_pacman=(socat openvpn xorg-xsetroot neofetch htop\
-				xorg-xev xbindkeys gscreenshot mpd rofi\
+				xorg-xev xbindkeys flameshot mpd rofi\
 				ranger 
 				)
 

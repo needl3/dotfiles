@@ -19,7 +19,7 @@ initializePulseAudio(){
 initializeMiscServices(){
     # Please save my eyes
     redshift -x
-    redshift -O 4000
+    redshift -O 3000
 
     # Restore my waifu
     nitrogen --restore

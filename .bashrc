@@ -56,3 +56,9 @@ sshfwd(){
 f(){
 	find $1 -type f 2> /dev/null | grep -i $2
 }
+
+gimme80()
+{
+	$(toggleConservationMode;while [ $(cat /sys/class/power_supply/BAT1/capacity) -lt "80" ];do sleep 60;cat /sys/class/power_supply/BAT1/capacity; done;toggleConservationMode;exit)&
+	disown
+}

@@ -150,6 +150,8 @@ install_st(){
 	patch -p1 < ../alpha.diff
 	echo "[+] Patching focus-unfocus effect"
 	patch -p1 < ../focus-unfocus.diff
+	echo "[+] Patching fix for anysize bug"
+	patch -p1 < ../anysize-bug-fix.diff
 	make clean install
 	cd ../
 	rm -r st-0.8.5*

@@ -3,7 +3,7 @@
 # All pacman packages to install
 packages_pacman=(socat openvpn xorg-xsetroot neofetch htop\
 				xorg-xev xbindkeys flameshot mpd rofi\
-				ranger 
+				ranger wget curl
 				)
 
 # All yay packages to install
@@ -17,9 +17,10 @@ src_dir="src"
 dest_dir="/usr/local/bin"
 
 placeFiles(){
-	cp .xinitrc /home/$SUDO_USER
-	cp .bashrc /home/$SUDO_USER
-	cp .Xmodmap /home/$SUDO_USER
+	dotfiles=( .xinitrc .bashrc .Xmodmap .xbindkeysrc )
+	cp ${dotfiles[@]} /home/$SUDO_USER
+	cp 70-synaptics.conf /usr/share/X11/xorg.conf.d/70-synaptics.conf
+	cp .bashrc /root/
 }
 
 configureBrightnessModifier(){
@@ -139,23 +140,31 @@ install_dwmblocks(){
 install_st(){
 	echo "[+] Installing Simple Terminal(ST)"
 	cd st
-	git clone https://git.suckless.org/st
-	cd st
-	patch -p1 < ../alpha_scroll_focus.diff
+	wget https://dl.suckless.org/st/st-0.8.5.tar.gz
+	tar -xf st-0.8.5.tar.gz
+	cd st-0.8.5
+
+	echo "[+] Patching scroll+overflow"
+	patch -p1 < ../st-scroll-overflow.diff
+	echo "[+] Patching alpha"
+	patch -p1 < ../alpha.diff
+	echo "[+] Patching focus-unfocus effect"
+	patch -p1 < ../focus-unfocus.diff
 	make clean install
-	make clean
 	cd ../
-	rm -r st
+	rm -r st-0.8.5*
 	cd ../
 }
 configure_dotfiles(){
 	echo "[+] Configuring dotfiles"
 	mkdir /home/$SUDO_USER/.config 2> /dev/null
 	cp -r .config/* /home/$SUDO_USER/.config/
-	cp .Xmodmap .xinitrc .xbindkeysrc .bashrc /home/$SUDO_USER/
-	cp 70-synaptics.conf /usr/share/X11/xorg.conf.d/70-synaptics.conf
-	cp .bashrc /root/
+	placeFiles
 }
+
+# Install all dependencies
+pacman -Syyu ${packages_pacman[@]} --noconfirm
+yay -S ${packages_yay[@]} --cleanafter
 
 #######################
 # Running Functions   #
@@ -172,10 +181,6 @@ install_st
 configure_dotfiles
 
 # Local port forwarding for portmap rule, I have that in my .bashrc file
-
-# Install all dependencies
-pacman -Syyu ${packages_pacman[@]} --noconfirm
-yay -S ${packages_yay[@]} --cleanafter
 
 # Enable all services
 systemctl enable ${services[@]}

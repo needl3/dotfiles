@@ -54,3 +54,6 @@
 
 "st vis"
    Control+M
+
+"qterminal"
+   Control+Shift+Return

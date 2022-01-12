@@ -21,7 +21,7 @@ static const char col_black[] 		= "#000000";
 static const char col_white[] 		= "#ffffff";
 #include "../dwmbar/DwmbarThemes.h"
 
-static const unsigned int baralpha = 0xd0;
+static const unsigned int baralpha = 0x00;
 static const unsigned int borderalpha = OPAQUE;
 static const unsigned int alphas[][3]      = {
 	/*               fg      bg        border     */
@@ -144,11 +144,12 @@ static Key keys[] = {
 	{ MODKEY|Mod4Mask,              XK_0,      togglegaps,     {0} },
 	{ MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
 	{ MODKEY,                       XK_j,      view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+//	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_s,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_c,      setlayout,      {.v = &layouts[11]} },
+	{ MODKEY|ShiftMask,				XK_c,      setlayout,      {.v = &layouts[12]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 //	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },

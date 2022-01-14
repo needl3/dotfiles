@@ -69,4 +69,5 @@ else
 	upinfo="$(expr $received_B / 1024 )KB/s"
 fi
 
-printf "$upicon$upinfo $downicon$downinfo\n"
+# printf "$upicon$upinfo $downicon$downinfo\n"
+printf "$downinfo"

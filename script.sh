@@ -171,7 +171,6 @@ yay -S ${packages_yay[@]} --cleanafter
 #######################
 # Running Functions   #
 #######################
-placeFiles
 configureKiller
 configureConservationMode
 configureBacklight

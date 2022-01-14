@@ -22,4 +22,4 @@ ip=$(iwctl station $intfr show | grep IPv4 | cut -c 40-47)
 if [ -z ip ];then
 	ip="XXX.XXX.XXX.XXX"
 fi
-printf "$icon$ip "
+printf "$icon$ip"

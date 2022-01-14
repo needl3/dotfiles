@@ -111,7 +111,7 @@ static const char *statuscmd[] = { "/bin/sh", "-c", NULL, NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,		                XK_Return, spawn,          {.v = rofiapps } },
-	{ MODKEY|ShiftMask,				XK_space, spawn,          {.v = rofiwindow } },
+	{ MODKEY|ShiftMask,				XK_space,  spawn,          {.v = rofiwindow } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = roficmd } },
 	{ MODKEY|ShiftMask,				XK_p,      spawn,          {.v = rofiemoji } },
 	{ MODKEY,                       XK_Escape, spawn,          {.v = rofipower } },
@@ -158,6 +158,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY,             			XK_Right,  spawn,          SHCMD("~/.config/scripts/wallpaper_toggler.sh 1") },
+	{ MODKEY,             			XK_Left,   spawn,          SHCMD("~/.config/scripts/wallpaper_toggler.sh -1") },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)

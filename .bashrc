@@ -41,6 +41,10 @@ export LS_COLORS
 # Aliases with color
 alias ls="ls --color"
 alias nf=neofetch
+alias cddwm="cd ~/gitClones/configs/dwm_collection/dwm"
+alias cddwmb="cd ~/gitClones/configs/dwm_collection/dwmblocks"
+alias cdcfg="cd ~/gitClones/configs/.config"
+
 
 neofetch --config ~/.config/neofetch/config-bashrc.conf
 
@@ -57,8 +61,8 @@ f(){
 	find $1 -type f 2> /dev/null | grep -i $2
 }
 
-gimme80()
+gimmeX()
 {
-	$(toggleConservationMode;while [ $(cat /sys/class/power_supply/BAT1/capacity) -lt "80" ];do sleep 60;cat /sys/class/power_supply/BAT1/capacity; done;toggleConservationMode;exit)&
+	$(toggleConservationMode;while [ $(cat /sys/class/power_supply/BAT1/capacity) -lt "$1" ];do sleep 60;cat /sys/class/power_supply/BAT1/capacity; done;toggleConservationMode;exit)&
 	disown
 }

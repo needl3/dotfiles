@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 initializeNetwork(){
     # Make the dhcpcd binary setuid during arch installation
@@ -25,7 +25,7 @@ initializeMiscServices(){
     nitrogen --restore
 
     # Start compositor
-    picom -b
+    picom --experimental-backend -b
 
     dwmblocks &
 
@@ -39,7 +39,6 @@ initializeMiscServices(){
     flameshot &
 
 }
-
 initializeMiscServices &
 
 # Start WM

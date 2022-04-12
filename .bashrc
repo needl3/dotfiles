@@ -66,3 +66,14 @@ gimmeX()
 	$(toggleConservationMode;while [ $(cat /sys/class/power_supply/BAT1/capacity) -lt "$1" ];do sleep 60;cat /sys/class/power_supply/BAT1/capacity; done;toggleConservationMode;exit)&
 	disown
 }
+downloadMusic()
+{
+	# Downloads youtube music playlist
+	# Usage: downloadMusic <playlist url with or without index parameter>
+	if [ "$1" != "" ];
+	then
+		youtube-dl --ignore-errors --format bestaudio --extract-audio --audio-format mp3 --audio-quality 160K --output "%(title)s.%(ext)s" --yes-playlist "https://youtube.com/playlist?$(echo $1 | grep -E -o 'list=.*' | grep -E -o '^[^&]+')"
+	else
+		echo "No url provided. Please pass playlist url"
+	fi
+}

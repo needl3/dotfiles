@@ -66,12 +66,13 @@ echo "\
 echo "${blue}Set root user password${reset}"
 passwd
 read -p "${blue}Enter your new username:${reset}" username
-useradd -m $username
+useradd -mG wheel,audio,optical,video,storage $username
 echo "${blue}Set your password${reset}"
 passwd $username
-useradd -aG wheel,audio,optical,video,storage $username
+
+# Configure previlage escalation options
 pacman -S sudo --noconfirm
-echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
+echo "$username ALL=(ALL) ALL" >> /etc/sudoers
 
 # Configure boot options
 pacman -S grub efibootmgr os-prober --noconfirm

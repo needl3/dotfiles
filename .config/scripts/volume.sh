@@ -1,4 +1,4 @@
-#!/bin/bash
+2#!/bin/bash
 
 case $1 in 
 	"1" )

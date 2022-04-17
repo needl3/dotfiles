@@ -53,13 +53,13 @@ connect(){
 	fi
 }
 sendNotification(){
-	if ! ip a | grep $interface | grep inet > /dev/null;then
+	if ! ip a | grep $interface | grep inet;then
 		notify-send "Disconnected"
 		connect
 	elif ip a | grep $interface | grep DOWN; then
-		notify-send "No interface" "$(st bash -c "ip a;read")"
+		notify-send "No interface"
 	elif ip a | grep $interface | grep UP; then
-		notify-send " Wifi" "$(iwconfig | grep $interface)"
+		notify-send " WiFi Connected" "$(iwctl station $interface show | grep Connected\ network | awk '{print $3}')"
 	fi
 }
 case $BUTTON in

@@ -7,15 +7,16 @@ blue=$'\e[1;34m'
 reset=$'\e[0m'
 
 # All pacman packages to install
-packages_pacman=(socat openvpn xorg xorg-xinit xorg-xsetroot xorg-xev xbindkeys\
-		neofetch htop flameshot mpd rofi ranger wget curl redshift\
-	       	base-devel go nitrogen synaptics\
-		ttf-joypixels ttf-jetbrains-mono
-		)
+packages_pacman=(xorg-server xorg-xinit xorg-xsetroot xorg-xrandr xbindkeys\
+				neofetch htop flameshot mpd rofi ranger wget curl redshift\
+				base-devel go nitrogen synaptics pulseaudio pavucontrol\
+				ttf-joypixels ttf-jetbrains-mono\
+				socat openvpn libcanberra\
+				)
 
 # All yay packages to install
 dependencies_jonaburg_picom=(ninja meson asciidoc uthash libconfig libev)
-packages_yay=(picom-jonaburg-git)
+packages_yay=(picom-jonaburg-git libxft-bgra nerd-fonts-complete)
 
 # All system services to enable
 services=(mpd iwd dhcpcd)
@@ -29,7 +30,7 @@ placeFiles(){
 	echo "${blue}Placing Files${reset}"
 	dotfiles=( .xinitrc .bashrc .Xmodmap .xbindkeysrc .bash_profile )
 	for i in ${dotfiles[@]};do
-		ln -sf $base_dir/$i /home/$SUDO_USER
+		su -c "ln -sf $base_dir/$i /home/$SUDO_USER" $SUDO_USER
 	done
 	sudo cp 70-synaptics.conf /usr/share/X11/xorg.conf.d/70-synaptics.conf
 	sudo cp .bashrc /root/
@@ -192,7 +193,7 @@ read -p "${green}Do you want to install above packages from AUR?${reset}" ch
 if [[ $ch == "y" || $ch == "Y" ]];then
 	echo "${blue}[+] Installing aur packages${reset}"
 	sudo pacman -S ${dependencies_jonaburg_picom[@]}
-	yay -S ${packages_yay[@]} --cleanafter --removemake --noredownload
+	su -c "yay -S ${packages_yay[@]} --cleanafter --removemake --noredownload" $SUDO_USER
 else
 	echo "${red}[-] Skipping AUR packages${red}"
 fi

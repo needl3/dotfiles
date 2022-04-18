@@ -11,11 +11,10 @@ packages_pacman=(xorg-server xorg-xinit xorg-xsetroot xorg-xrandr xbindkeys\
 				neofetch htop flameshot mpd rofi ranger wget curl redshift\
 				base-devel go nitrogen synaptics pulseaudio pavucontrol\
 				ttf-joypixels ttf-jetbrains-mono\
-				socat openvpn libcanberra\
-				)
+				socat openvpn dunst libcanberra\
+			)
 
 # All yay packages to install
-dependencies_jonaburg_picom=(ninja meson asciidoc uthash libconfig libev)
 packages_yay=(picom-jonaburg-git libxft-bgra nerd-fonts-complete)
 
 # All system services to enable
@@ -180,20 +179,19 @@ configureAurHelper(){
 	echo "${blue}[+] Configuring YAY(Aur Helper)${reset}"
 	su -c "git clone https://aur.archlinux.org/yay-git.git" $SUDO_USER
 	cd yay-git
-	su -c "makepkg -si" needle
+	sudo -u $SUDO_USER makepkg -si
 	cd ../
 	rm -rf yay-git
 }
-configureDotfiles
 # Install all dependencies
 pacman -Syyu ${packages_pacman[@]} --noconfirm
+configureDotfiles
 configureAurHelper
 echo "${packages_yay[@]}"
 read -p "${green}Do you want to install above packages from AUR?${reset}" ch
 if [[ $ch == "y" || $ch == "Y" ]];then
 	echo "${blue}[+] Installing aur packages${reset}"
-	sudo pacman -S ${dependencies_jonaburg_picom[@]}
-	su -c "yay -S ${packages_yay[@]} --cleanafter --removemake --noredownload" $SUDO_USER
+	sudo -u $SUDO_USER yay -S ${packages_yay[@]} --cleanafter --removemake --noredownload
 else
 	echo "${red}[-] Skipping AUR packages${red}"
 fi

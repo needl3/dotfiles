@@ -48,12 +48,3 @@
 
 "st ranger"
    F5
-
-"st cmus"
-   Control+M
-
-"st vis"
-   Control+M
-
-"qterminal"
-   Control+Shift+Return

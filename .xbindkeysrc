@@ -48,3 +48,13 @@
 
 "st ranger"
    F5
+
+"~/.config/scripts/extendMonitor.sh r"
+	Control+Shift+Right
+"~/.config/scripts/extendMonitor.sh l"
+	Control+Shift+Left
+"~/.config/scripts/extendMonitor.sh u"
+	Control+Shift+Up
+"~/.config/scripts/extendMonitor.sh d"
+	Control+Shift+Down
+

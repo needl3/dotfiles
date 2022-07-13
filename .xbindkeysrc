@@ -58,3 +58,5 @@
 "~/.config/scripts/extendMonitor.sh d"
 	Control+Shift+Down
 
+"~/.config/scripts/extendMonitor.sh k"
+	Control+Shift+k

@@ -50,13 +50,13 @@
    F5
 
 "~/.config/scripts/extendMonitor.sh r"
-	Control+Shift+Right
+	Control+Alt+Right
 "~/.config/scripts/extendMonitor.sh l"
-	Control+Shift+Left
+	Control+Alt+Left
 "~/.config/scripts/extendMonitor.sh u"
-	Control+Shift+Up
+	Control+Alt+Up
 "~/.config/scripts/extendMonitor.sh d"
-	Control+Shift+Down
+	Control+Alt+Down
 
 "~/.config/scripts/extendMonitor.sh k"
-	Control+Shift+k
+	Control+Alt+k

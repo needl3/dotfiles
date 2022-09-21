@@ -4,7 +4,7 @@
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
-
+export EDITOR=vim
 
 reset="\[\033[0m\]"           	# Reset Color
 Red="\[\033[1;31m\]"          	# Bold Red

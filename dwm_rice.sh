@@ -27,9 +27,9 @@ dest_dir="/usr/local/bin"
 
 placeFiles(){
 	echo "${blue}Placing Files${reset}"
-	dotfiles=( .xinitrc .bashrc .Xmodmap .xbindkeysrc .bash_profile )
+	dotfiles=( .xinitrc .bashrc .Xmodmap .xbindkeysrc .bash_profile .vimrc )
 	for i in ${dotfiles[@]};do
-		su -c "ln -sf $base_dir/$i /home/$SUDO_USER" $SUDO_USER
+		sudo ln -sf $base_dir/$i /home/$SUDO_USER
 	done
 	sudo cp 70-synaptics.conf /usr/share/X11/xorg.conf.d/70-synaptics.conf
 	sudo cp .bashrc /root/
@@ -171,30 +171,44 @@ installSt(){
 }
 configureDotfiles(){
 	echo "${blue}[+] Configuring dotfiles${reset}"
-	mkdir /home/$SUDO_USER/.config 2> /dev/null
+	sudo mkdir /home/$SUDO_USER/.config
 	cp -r .config/* /home/$SUDO_USER/.config/
+	chown -R $SUDO_USER:$SUDO_USER .config/
 	placeFiles
 }
 configureAurHelper(){
 	echo "${blue}[+] Configuring YAY(Aur Helper)${reset}"
-	su -c "git clone https://aur.archlinux.org/yay-git.git" $SUDO_USER
+	sudo git clone https://aur.archlinux.org/yay-git.git
 	cd yay-git
-	sudo -u $SUDO_USER makepkg -si
+	makepkg -si
 	cd ../
 	rm -rf yay-git
 }
+
+# Program Entry
+
+#Check for root user
+if [ $UID != 0 ];then
+	echo "${red}Run it as root${reset}"
+	exit 1
+fi
+
 # Install all dependencies
 pacman -Syyu ${packages_pacman[@]} --noconfirm
+
 configureDotfiles
+
 configureAurHelper
+
 echo "${packages_yay[@]}"
 read -p "${green}Do you want to install above packages from AUR?${reset}" ch
 if [[ $ch == "y" || $ch == "Y" ]];then
 	echo "${blue}[+] Installing aur packages${reset}"
-	sudo -u $SUDO_USER yay -S ${packages_yay[@]} --cleanafter --removemake --noredownload
+	sudo yay -S ${packages_yay[@]} --cleanafter --removemake --noredownload
 else
 	echo "${red}[-] Skipping AUR packages${red}"
 fi
+
 #######################
 # Running Functions   #
 #######################
@@ -207,8 +221,6 @@ installDwm
 installDwmblocks
 installSt
 configureDotfiles
-
-# Local port forwarding for portmap rule, I have that in my .bashrc file
 
 # Enable all services
 systemctl enable ${services[@]}

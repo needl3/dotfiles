@@ -5,7 +5,7 @@ bat_dir="/sys/class/power_supply/BAT1"
 battery_percent=$(cat $bat_dir/capacity)
 
 case $(cat $bat_dir/status) in
-    "Unknown")
+    "Not charging")
         battery_icon=🔋;;
     
     "Discharging")

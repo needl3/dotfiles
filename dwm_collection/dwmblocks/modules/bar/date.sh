@@ -1,4 +1,5 @@
-if [ $1 == 'nepali' ];
+#!/usr/bin/bash
+if [[ $1 = 'nepali' ]];
 then
 	if [ ! -f /tmp/nepali_date ];
 	then

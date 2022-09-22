@@ -12,9 +12,9 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int vertpad            = 0;       /* vertical padding of bar */
 static const int sidepad            = 0;       /* horizontal padding of bar */
-static const int user_bh            = 25;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int user_bh            = 0;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 
-static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=10", "monospace:size=12", "JoyPixels:pixelsize=12:" };
+static const char *fonts[]          = {"Iosevka Term", "JetBrainsMono Nerd Font:size=10", "monospace:size=12", "JoyPixels:pixelsize=12:" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font;style=15";
 
 static const char col_black[] 		= "#000000";
@@ -89,7 +89,7 @@ static const char *roficmd[] = {"rofi", "-modi", "run", "-show", "run"};
 static const char *rofiapps[] = {"rofi", "-modi", "drun", "-show", "drun"};
 static const char *rofiwindow[] = {"rofi", "-modi", "window", "-show", "window"};
 static const char *rofiemoji[] = {"rofi", "-modi", "emoji", "-show", "emoji"};
-static const char *rofipower[] = {"/home/needle/.config/rofi/scripts/powermenu.sh"};
+static const char *rofipower[] = {"/home/Oxsiyo/.config/rofi/scripts/powermenu.sh"};
 static const char *termcmd[]  = { "st", NULL };
 
 /* commands spawned when clicking statusbar, the mouse button pressed is exported as BUTTON */

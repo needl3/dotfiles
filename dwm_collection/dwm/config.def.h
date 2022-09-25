@@ -111,7 +111,7 @@ static const char *statuscmd[] = { "/bin/sh", "-c", NULL, NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,		                XK_Return, spawn,          {.v = rofiapps } },
-	{ MODKEY|ShiftMask,				XK_space,  spawn,          {.v = rofiwindow } },
+//	{ MODKEY|ShiftMask,				XK_space,  spawn,          {.v = rofiwindow } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = roficmd } },
 	{ MODKEY|ShiftMask,				XK_p,      spawn,          {.v = rofiemoji } },
 	{ MODKEY,                       XK_Escape, spawn,          {.v = rofipower } },
@@ -150,14 +150,14 @@ static Key keys[] = {
 	{ MODKEY,                       XK_s,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_c,      setlayout,      {.v = &layouts[11]} },
 	{ MODKEY|ShiftMask,				XK_c,      setlayout,      {.v = &layouts[12]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
+//	{ MODKEY,                       XK_space,  setlayout,      {0} },
 //	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_f,	   focusmon,       {.i = -1 } },
+	{ MODKEY,                       XK_j,	   focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_f,	   tagmon,         {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_j,	   tagmon,         {.i = +1 } },
 	{ MODKEY|ShiftMask,				XK_Right,  spawn,          SHCMD("~/.config/scripts/wallpaper_toggler.sh 1") },
 	{ MODKEY|ShiftMask,				XK_Left,   spawn,          SHCMD("~/.config/scripts/wallpaper_toggler.sh -1") },
 	TAGKEYS(                        XK_1,                      0)

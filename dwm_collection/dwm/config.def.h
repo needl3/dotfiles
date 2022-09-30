@@ -104,6 +104,7 @@ static const StatusCmd statuscmds[] = {
 	{ "/opt/dblocks_modules/updates.sh"		,								6 	},
 	{ "/opt/dblocks_modules/battery.sh"		,								7 	},
 	{ "/opt/dblocks_modules/date.sh"			,							8 	},
+	{ "/opt/dblocks_modules/bluetooth.sh"			,						2 	},
 	{ "/opt/dblocks_modules/wifi.sh"			,							9 	},	
 };
 static const char *statuscmd[] = { "/bin/sh", "-c", NULL, NULL };

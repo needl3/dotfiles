@@ -8,8 +8,9 @@ static const Block blocks[] = {
 //	{"", 		"/opt/dblocks_modules/bar/volume.sh",					10,					10},
 	{"", 		"/opt/dblocks_modules/bar/cpu.sh",						5,					3},
 	{"", 		"/opt/dblocks_modules/bar/memory.sh",					5,					4},
-	{"",		"/opt/dblocks_modules/bar/updates.sh",					0,					6},
+//	{"",		"/opt/dblocks_modules/bar/updates.sh",					0,					6},
 	{"", 		"/opt/dblocks_modules/bar/date.sh",						60,					8},
+	{"", 		"/opt/dblocks_modules/bar/bluetooth.sh",				60,					2},
 	{"", 		"/opt/dblocks_modules/bar/battery.sh",					120,				7},
 };
 

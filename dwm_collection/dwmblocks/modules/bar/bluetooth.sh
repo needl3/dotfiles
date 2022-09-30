@@ -14,6 +14,10 @@ function connect(){
 		if ! systemctl status bluetooth > /dev/null;then
 			echo "${red}Bluetooth service not active. Activate and try again${reset}"
 		else
+			if [ "$(bluetoothctl show | grep Powered: | awk '{print $2}')" == "no" ];then
+				notify-send "Bluetooth powered off"
+				exit 1
+			fi
 			echo "${yellow}----------------------------${reset}"
 			local c=$(listConnected)
 			if [ "$c" != "" ];then
@@ -88,6 +92,10 @@ function listConnected(){
 }
 
 function getConnected(){
+	if [ "$(bluetoothctl show | grep Powered: | awk '{print $2}')" == "no" ];then
+		notify-send "Bluetooth powered off"
+		exit 1
+	fi
 	if [ "$(bluetoothctl show | grep Discoverable: | awk '{print $2}')" == "no" ];then
 		bluetoothctl discoverable yes
 		bluetoothctl pairable yes

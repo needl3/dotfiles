@@ -17,17 +17,64 @@ findActiveInterface()
 	printf $intfr
 }
 
-
-# Choose appropriate icon
-icon=
 interface=$(findActiveInterface)
 
-if ip a | grep $interface | grep DOWN > /dev/null;then
-	icon=🚫
-elif ! ip a | grep $interface | grep inet > /dev/null;then
-	icon=📡
-elif iwctl station $interface show | grep Connected > /dev/null;then
-	icon=💚
-fi
+connect(){
+	iwctl station wlan0 scan
+	echo "Scanning wifi...."
+	sleep 1
+	networks=()
+	n=0
+	for i in $(iwctl station $interface get-networks | grep "\*\*\*" | awk 'FNR>1 {print $1}');do
+		echo "$n: $i"
+		networks+=( $i )
+		n=$( expr $n + 1 )
+	done
 
-printf "$icon"
+	if iwctl station $interface show | grep disconnected;then
+		iwctl station $interface disconnect
+	fi
+	read -e -p "=> " ssid
+	re='^[0-9]+$'
+	if [[ $ssid =~ $re ]];then
+		ssid=${networks[$ssid]}
+	fi
+
+	if [ ! $(iwctl station $interface connect "$ssid") ];then
+		notify-send "Connected to WiFi network" "$ssid"
+	else
+		notify-send "Coundn't connect to WiFi Network" "$ssid"
+	fi
+
+}
+
+sendNotification(){
+	if ! ip a | grep $interface | grep inet;then
+		notify-send "Disconnected"
+		connect
+	elif ip a | grep $interface | grep DOWN; then
+		notify-send "No interface"
+	elif ip a | grep $interface | grep UP; then
+		notify-send " WiFi Connected" "$(iwctl station $interface show | grep Connected\ network | awk '{print $3}')"
+	fi
+}
+
+if [ "$1" == "connect" ];then
+	connect
+elif [ "$1" == "sendNotification" ];then
+	sendNotification
+else
+	# Choose appropriate icon
+	icon=
+	interface=$(findActiveInterface)
+
+	if ip a | grep $interface | grep DOWN > /dev/null;then
+		icon=🚫
+	elif ! ip a | grep $interface | grep inet > /dev/null;then
+		icon=📡
+	elif iwctl station $interface show | grep Connected > /dev/null;then
+		icon=💚
+	fi
+
+	printf "$icon"
+fi

@@ -110,24 +110,6 @@ configureSSH(){
 		mv /$USER/.ssh/id_rsa /home/$SUDO_USER/.ssh/
 		echo "${blue}Now move the /home/$SUDO_USER/.ssh/id_rsa to a secure client machine${reset}"
 
-		echo "${blue}Updating sshd configuration file${reset}"
-		cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
-
-		echo "${green}The default port is 22 (Unchanged) change it?(y/n)${reset}"
-		read op
-		if [[ $op == "y" ]]; then
-			while :; do
-				echo "${green}Enter port number:${reset}"
-				read portNum
-				if timeout 1 bash -c "echo testing > /dev/tcp/google.com/$portNum"; then
-					echo "${red}Port already in use. Enter another port.${reset}"
-				else
-					sed -i "s/^#Port .*/Port $portNum/" /etc/ssh/sshd_config
-					break
-				fi
-			done
-		fi
-
 		systemctl start sshd
 
 		echo "${green}[+] SSH configuration success!${reset}"

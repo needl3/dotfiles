@@ -115,7 +115,7 @@ else
 	if [ "$(bluetoothctl show | grep Powered: | awk '{print $2}')" == "no" ];then
 		printf "⛔"
 	else
-		if [ listConnected != "" ];then
+		if [ "$(listConnected)" != "" ];then
 			printf "🎧"
 		else
 			printf "💤"

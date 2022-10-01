@@ -23,7 +23,7 @@ function connect(){
 			if [ "$c" != "" ];then
 				echo "${blue}Currently connected to: ${green}$c${reset}"
 				read -p "${blue}Do you want to connect to some other device?(Y/N)${green}" d
-				if [[ "$d" != "Y" || "$d" != "y" ]];then
+				if [ "$d" != "Y" || "$d" != "y" ];then
 					exit 0
 				fi
 			fi

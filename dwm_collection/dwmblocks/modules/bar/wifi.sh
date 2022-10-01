@@ -51,7 +51,7 @@ connect(){
 sendNotification(){
 	if ! ip a | grep $interface | grep inet;then
 		notify-send "Disconnected"
-		connect
+		echo "/opt/dblocks_modules/bar/wifi.sh connect" | xargs st
 	elif ip a | grep $interface | grep DOWN; then
 		notify-send "No interface"
 	elif ip a | grep $interface | grep UP; then

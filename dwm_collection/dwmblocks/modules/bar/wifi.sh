@@ -20,12 +20,13 @@ findActiveInterface()
 interface=$(findActiveInterface)
 
 connect(){
-	iwctl station wlan0 scan
+	iwctl station $interface scan
 	echo "Scanning wifi...."
 	sleep 1
 	networks=()
+	disconnected="FNR>1"
 	n=0
-	for i in $(iwctl station $interface get-networks | grep "\*\*\*" | awk 'FNR>1 {print $1}');do
+	for i in $(iwctl station $interface get-networks |  grep '*' | awk '{print NR==1?$4:$1}');do
 		echo "$n: $i"
 		networks+=( $i )
 		n=$( expr $n + 1 )

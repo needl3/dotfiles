@@ -1,7 +1,13 @@
 " ----------------------Settings Section---------------------
+syntax on
+filetype plugin indent on
+set nocompatible
+set ts=2 sts=2 sw=2 et ai si
+
 set encoding=utf-8
 set number
 set relativenumber
+"
 " Highlight cursor line
 set cursorline
 set shiftwidth=4
@@ -12,26 +18,74 @@ set nowrap
 set autoindent
 set smarttab
 set mouse=a
+let mapleader=","
 
 " ----------------------Plugin Section---------------------
 call plug#begin('~/.vim/plugged')
 
 Plug 'preservim/nerdtree' " Directory Browser
 Plug 'vim-airline/vim-airline' " Vim bottom bar
+Plug 'vim-airline/vim-airline-themes' " Vim bottom bar
+Plug 'tpope/vim-fugitive' " Git Info for Airline
 Plug 'ap/vim-css-color'
 Plug 'rafi/awesome-vim-colorschemes'
-Plug 'ycm-core/YouCompleteMe' " Autocompleteion support
 Plug 'sainnhe/gruvbox-material' " GruvBox theme
+Plug 'neoclide/coc.nvim'	" Autocompletion
+Plug 'prettier/vim-prettier'
 
 call plug#end()
 
 
 " ----------------------Mapping Section---------------------
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-i> :PlugInstall<CR>
-" }}}
+nnoremap <C-b> :NERDTreeToggle<CR>
+nnoremap <C-n> :enew <CR>
+nnoremap <C-l> :bnext<CR>
+nnoremap <C-h> :bprevious<CR>
+nnoremap <leader>bl :ls <CR>
+nnoremap <leader>bq :w\|bd<cr>
+
+" use <tab> for trigger completion and navigate to the next complete item
+function! CheckBackspace() abort
+      let col = col('.') - 1
+        return !col || getline('.')[col - 1]  =~# '\s'
+    endfunction
+
+    inoremap <silent><expr> <Tab>
+          \ coc#pum#visible() ? coc#pum#next(1) :
+          \ CheckBackspace() ? "\<Tab>" :
+          \ coc#refresh()
 
 " ----------------------Variables Section---------------------
 set background=dark
 :colorscheme gruvbox
 
+" ---------------------Airline Configuration-----------------
+let g:airline_powerline_fonts = 1
+
+if !exists('g:airline_symbols')
+        let g:airline_symbols = {}
+    endif
+
+" unicode symbols
+" let g:airline_symbols.linenr = '␊'
+" let g:airline_symbols.linenr = '␤'
+" let g:airline_symbols.linenr = '¶'
+" let g:airline_symbols.branch = '⎇'
+" let g:airline_symbols.paste = 'ρ'
+" let g:airline_symbols.paste = 'Þ'
+" let g:airline_symbols.paste = '∥'
+" let g:airline_symbols.whitespace = 'Ξ'
+
+" airline symbols
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+
+let g:airline_left_alt_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '  '
+let g:airline_extensions = ['branch', 'tabline']
+let g:airline_theme = 'onedark'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ''

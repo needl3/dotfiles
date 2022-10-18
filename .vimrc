@@ -30,8 +30,10 @@ Plug 'tpope/vim-fugitive' " Git Info for Airline
 Plug 'ap/vim-css-color'
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'sainnhe/gruvbox-material' " GruvBox theme
-Plug 'neoclide/coc.nvim'	" Autocompletion
+Plug 'neoclide/coc.nvim', {'do': 'npm install' }	" Autocompletion
 Plug 'prettier/vim-prettier'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim' " For Files command for fuzzy search
 
 call plug#end()
 
@@ -43,18 +45,38 @@ nnoremap <C-l> :bnext<CR>
 nnoremap <C-h> :bprevious<CR>
 nnoremap <leader>bl :ls <CR>
 nnoremap <leader>bq :w\|bd<cr>
+nnoremap <C-p>p :FZF -e<CR>
+nnoremap <C-p>b :call fzf#vim#buffers()<CR>
+nnoremap <C-p> :call FZFProjectRoot()<CR>
+
 
 " use <tab> for trigger completion and navigate to the next complete item
 function! CheckBackspace() abort
-      let col = col('.') - 1
-        return !col || getline('.')[col - 1]  =~# '\s'
-    endfunction
+  let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
-    inoremap <silent><expr> <Tab>
-          \ coc#pum#visible() ? coc#pum#next(1) :
-          \ CheckBackspace() ? "\<Tab>" :
-          \ coc#refresh()
+inoremap <silent><expr> <Tab>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
 
+" search from the git root if we're in a git repo
+function! FZFProjectRoot()
+    let project_root = system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+    if strlen(project_root) > 0
+        call fzf#run(fzf#wrap('FZFProjectRoot', {'dir': project_root}))
+    else
+        call fzf#run(fzf#wrap('FZFProjectRoot'))
+    endif
+endfunction
+
+if has("clipboard")
+    set clipboard=unnamed " copy to the system clipboard
+    if has("unnamedplus") " X11 support
+        set clipboard+=unnamedplus
+    endif
+endif
 " ----------------------Variables Section---------------------
 set background=dark
 :colorscheme gruvbox
@@ -89,3 +111,4 @@ let g:airline_extensions = ['branch', 'tabline']
 let g:airline_theme = 'onedark'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#right_sep = ''

@@ -84,7 +84,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 # Configure miscellaneous programs
 echo "${blue}Installing miscellaneous programs${reset}"
-sudo pacman -S mesa xf86-video-intel xf86-video-amdgpu git iwd dhcpcd python vim --noconfirm
+sudo pacman -S mesa xf86-video-intel xf86-video-amdgpu git iwd dhcpcd python gvim --noconfirm
 systemctl enable iwd dhcpcd
 
 read -p "${green}Done Installing Arch linux. Reboot?(Y/N)${reset}" reboot

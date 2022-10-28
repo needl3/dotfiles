@@ -2,23 +2,23 @@
 syntax on
 filetype plugin indent on
 set nocompatible
-set ts=2 sts=2 sw=2 et ai si
-
+set hidden
 set encoding=utf-8
 set number
 set relativenumber
-"
-" Highlight cursor line
 set cursorline
 set shiftwidth=4
 set tabstop=4
-" Donot change cursor line while scrolling
 set scrolloff=0
 set nowrap
 set autoindent
 set smarttab
 set mouse=a
+set autoread
 let mapleader=","
+
+" Custom command
+command! Wwq :w|bd
 
 " ----------------------Plugin Section---------------------
 call plug#begin('~/.vim/plugged')
@@ -41,10 +41,11 @@ nnoremap <C-b> :NERDTreeToggle<CR>
 nnoremap <C-n> :enew <CR>
 nnoremap <C-l> :bnext<CR>
 nnoremap <C-h> :bprevious<CR>
-nnoremap <C-w> :w\|bd<cr>
 nnoremap <C-f> :FZF -e<CR>
 nnoremap <C-f>b :call fzf#vim#buffers()<CR>
 nnoremap <C-p> :call FZFProjectRoot()<CR>
+
+cnoreabbrev bq Wwq
 
 " use <tab> for trigger completion and navigate to the next complete item
 function! CheckBackspace() abort

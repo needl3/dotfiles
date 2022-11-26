@@ -89,7 +89,8 @@ static const char *roficmd[] = {"rofi", "-modi", "run", "-show", "run"};
 static const char *rofiapps[] = {"rofi", "-modi", "drun", "-show", "drun"};
 static const char *rofiwindow[] = {"rofi", "-modi", "window", "-show", "window"};
 static const char *rofiemoji[] = {"rofi", "-modi", "emoji", "-show", "emoji"};
-static const char *rofipower[] = {"/home/Oxsiyo/.config/rofi/scripts/powermenu.sh"};
+static const char *rofipower[] = {"/home/siyo/.config/rofi/scripts/powermenu.sh"};
+
 static const char *termcmd[]  = { "st", NULL };
 
 /* commands spawned when clicking statusbar, the mouse button pressed is exported as BUTTON */

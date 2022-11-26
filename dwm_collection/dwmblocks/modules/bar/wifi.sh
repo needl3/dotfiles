@@ -16,7 +16,6 @@ findActiveInterface()
 	fi
 	printf $intfr
 }
-
 interface=$(findActiveInterface)
 
 connect(){

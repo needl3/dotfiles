@@ -3,6 +3,7 @@
 
     # Which monitor should the notifications be displayed on.
     monitor = 0
+	follow = keyboard
 
     ### Geometry ###
 
@@ -18,7 +19,7 @@
     origin = top-right
 
     # Offset from the origin
-    offset = 25x25
+    offset = 10x30
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -58,7 +59,7 @@
     separator_height = 2
 
     # Padding between text and separator.
-    padding = 8
+    padding = 10
 
     # Horizontal padding.
     horizontal_padding = 8
@@ -68,7 +69,7 @@
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
-    frame_width = 1
+    frame_width = 3
 
     # Defines color of the frame around the notification window.
     frame_color = "#aaaaaa"
@@ -88,7 +89,7 @@
 
     ### Text ###
 
-    font = Unifont
+    font = Iosevka
 
     line_height = 0
 
@@ -177,7 +178,7 @@
     # Define the class of the windows spawned by dunst
     class = Dunst
 
-    corner_radius = 10
+    corner_radius = 0
 
     # Ignore the dbus closeNotification message.
     # Useful to enforce the timeout set by dunst configuration. Without this
@@ -197,19 +198,19 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#ff000000"
-    foreground = "#ffffff"
-    frame_color = "#00ff00"
-    timeout = 10
+    background = "#444444bb"
+    foreground = "#e2f4c7"
+    frame_color = "#1ebbd7"
+    timeout = 5 
 
 [urgency_normal]
-    background = "#ff000000"
-    foreground = "#ffffff"
-    frame_color = "#ffffff"
+    background = "#444444bb"
+    foreground = "#e2f4c7"
+	frame_color = "#00ff83"
     timeout = 10
 
 [urgency_critical]
-    background = "#ff900000"
-    foreground = "#ffffff"
-    frame_color = "#ff0000"
+    background = "#444444bb"
+    foreground = "#e2f4c7"
+    frame_color = "#ff4e50"
     timeout = 0

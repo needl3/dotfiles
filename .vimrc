@@ -16,7 +16,6 @@ set smarttab
 set mouse=a
 set autoread
 let mapleader=","
-
 " Custom command
 command! Wwq :w|bd
 
@@ -28,8 +27,8 @@ Plug 'vim-airline/vim-airline' " Vim bottom bar
 Plug 'vim-airline/vim-airline-themes' " Vim bottom bar
 Plug 'tpope/vim-fugitive' " Git Info for Airline
 Plug 'ap/vim-css-color'
-Plug 'neoclide/coc.nvim', {'do': 'npm install' }	" Autocompletion
-Plug 'prettier/vim-prettier'
+Plug 'neoclide/coc.nvim', {'do': 'yarn' }	" Autocompletion
+Plug 'prettier/vim-prettier', {'do': 'yarn'}
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim' " For Files command for fuzzy search
 
@@ -47,17 +46,30 @@ nnoremap <C-p> :call FZFProjectRoot()<CR>
 
 cnoreabbrev bq Wwq
 
-" use <tab> for trigger completion and navigate to the next complete item
-function! CheckBackspace() abort
-  let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
+" Press Tab and Shift+Tab and navigate around completion selections
+function! s:check_back_space() abort
+  let col = col('.') -1
+  return !col || getline('.')[col - 1] =~ '\s'
 endfunction
+
 
 inoremap <silent><expr> <Tab>
       \ coc#pum#visible() ? coc#pum#next(1) :
       \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
 
+inoremap <silent><expr> <S-Tab>
+  \ coc#pum#visible() ? coc#pum#next(-1) :
+  \ CheckBackspace() ? "\<S-Tab>" :
+  \ coc#refresh()
+
+" Press Enter to select completion items or expand snippets
+inoremap <silent><expr> <CR>
+  \ coc#pum#visible() ? coc#pum#confirm() :
+  \ "\<C-g>u\<CR>"
+
+let g:coc_snippet_next = '<Tab>'              " Use Tab to jump to next snippet placeholder
+let g:coc_snippet_prev = '<S-Tab>'            " Use Shift+Tab to jump to previous snippet placeholder
 " search from the git root if we're in a git repo
 function! FZFProjectRoot()
     let project_root = system('git rev-parse --show-toplevel 2> /dev/null')[:-2]

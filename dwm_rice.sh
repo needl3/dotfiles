@@ -10,12 +10,12 @@ reset=$'\e[0m'
 packages_pacman=(xorg-server xorg-xinit xorg-xsetroot xorg-xrandr xbindkeys\
 				neofetch htop flameshot mpd rofi ranger wget curl redshift\
 				base-devel go nitrogen synaptics pulseaudio pavucontrol\
-				ttf-joypixels ttf-jetbrains-mono\
-				socat openvpn dunst libcanberra\
+				ttf-joypixels ttf-jetbrains-mono libnotify\
+				socat openvpn dunst libcanberra bluez-utils\
 			)
 
 # All yay packages to install
-packages_yay=(picom-jonaburg-git libxft-bgra nerd-fonts-complete)
+packages_yay=(picom-jonaburg-git nerd-fonts-complete)
 
 # All system services to enable
 services=(mpd iwd dhcpcd)
@@ -160,9 +160,9 @@ configureDotfiles(){
 }
 configureAurHelper(){
 	echo "${blue}[+] Configuring YAY(Aur Helper)${reset}"
-	sudo git clone https://aur.archlinux.org/yay-git.git
+	sudo -u $SUDO_USER git clone https://aur.archlinux.org/yay-git.git
 	cd yay-git
-	makepkg -si
+	sudo -u $SUDO_USER makepkg -si
 	cd ../
 	rm -rf yay-git
 }

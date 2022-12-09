@@ -77,3 +77,4 @@ downloadMusic()
 		echo "No url provided. Please pass playlist url"
 	fi
 }
+alias lc=leetcode

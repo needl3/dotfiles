@@ -30,6 +30,8 @@ elif [[ $1 == "d" ]];then
 	xrandr --output "$PRIMARY" --above "$SECONDARY"
 elif [[ $1 == "k" ]];then
 	xrandr --output "$SECONDARY" --off
+elif [[ $1 == "m" ]];then
+	xrandr --output "$SECONDARY" --auto --scale-from 1366x768 --output "$PRIMARY" 
 else
 	echo "${YELLOW}Usage: ./extendMonitor.sh {l/r/u/d}${ENDCOLOR}"
 	if notify-send -v &> /dev/null;then

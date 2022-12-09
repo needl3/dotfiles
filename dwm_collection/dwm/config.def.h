@@ -90,6 +90,7 @@ static const char *rofiapps[] = {"rofi", "-modi", "drun", "-show", "drun"};
 static const char *rofiwindow[] = {"rofi", "-modi", "window", "-show", "window"};
 static const char *rofiemoji[] = {"rofi", "-modi", "emoji", "-show", "emoji"};
 static const char *rofipower[] = {"/home/siyo/.config/rofi/scripts/powermenu.sh"};
+static const char *rofiextend[] = {"/home/siyo/.config/rofi/scripts/screenShare.sh"};
 
 static const char *termcmd[]  = { "st", NULL };
 
@@ -117,6 +118,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_p,      spawn,          {.v = roficmd } },
 	{ MODKEY|ShiftMask,				XK_p,      spawn,          {.v = rofiemoji } },
 	{ MODKEY,                       XK_Escape, spawn,          {.v = rofipower } },
+	{ MODKEY|ShiftMask,            	XK_space,  spawn,          {.v = rofiextend} },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,		            	XK_Tab,    focusstack,     {.i = +1 } },

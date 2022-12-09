@@ -4,16 +4,11 @@ filetype plugin indent on
 set nocompatible
 set hidden
 set encoding=utf-8
-set number
 set relativenumber
 set cursorline
-set shiftwidth=4
-set tabstop=4
 set scrolloff=0
-set nowrap
-set autoindent
-set smarttab
 set mouse=a
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 set autoread
 let mapleader=","
 " Custom command
@@ -44,10 +39,10 @@ nnoremap <C-f> :FZF -e<CR>
 nnoremap <C-f>b :call fzf#vim#buffers()<CR>
 nnoremap <C-p> :call FZFProjectRoot()<CR>
 
-cnoreabbrev bq Wwq
+cnoreabbrev wq Wwq
 
 " Press Tab and Shift+Tab and navigate around completion selections
-function! s:check_back_space() abort
+function! CheckBackspace() abort
   let col = col('.') -1
   return !col || getline('.')[col - 1] =~ '\s'
 endfunction
@@ -89,6 +84,10 @@ endif
 " ----------------------Variables Section---------------------
 :colorscheme desert
 
+" ----------------------Vim prettier autoformat---------------
+let g:prettier#autoformat_config_present = 1
+let g:prettier#autoformat_require_pragma = 0
+let g:prettier#quickfix_enabled = 0
 " ---------------------Airline Configuration-----------------
 let g:airline_powerline_fonts = 1
 

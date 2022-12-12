@@ -4,8 +4,8 @@ filetype plugin indent on
 set nocompatible
 set hidden
 set encoding=utf-8
-set relativenumber
 set cursorline
+set number
 set scrolloff=0
 set mouse=a
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
@@ -38,6 +38,7 @@ nnoremap <C-h> :bprevious<CR>
 nnoremap <C-f> :FZF -e<CR>
 nnoremap <C-f>b :call fzf#vim#buffers()<CR>
 nnoremap <C-p> :call FZFProjectRoot()<CR>
+nnoremap <Leader><space> :term <CR>
 
 cnoreabbrev wq Wwq
 

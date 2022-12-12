@@ -3,7 +3,7 @@ static const Block blocks[] = {
 	/*Identifier*/	/*Command*/								/*Update Interval*/	/*Update Signal*/
 	{"", 		"/opt/dblocks_modules/bar/wifi.sh",						5,					9},
 	{"", 		"/opt/dblocks_modules/bar/network.sh",					5,					5},
-	{"", 		"/opt/dblocks_modules/bar/ip.sh",						10,					5},
+//	{"", 		"/opt/dblocks_modules/bar/ip.sh",						10,					5},
 //	{"", 		"/opt/dblocks_modules/bar/backlight.sh",				0,					1},
 //	{"", 		"/opt/dblocks_modules/bar/volume.sh",					10,					10},
 	{"", 		"/opt/dblocks_modules/bar/cpu.sh",						5,					3},

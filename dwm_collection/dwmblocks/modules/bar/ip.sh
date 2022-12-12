@@ -18,7 +18,7 @@ findActiveInterface()
 }
 
 intfr=$(findActiveInterface)
-ip=$(iwctl station $intfr show | grep IPv4 | cut -c 40-47)
+ip=$(ip a | grep -E ".* inet .* $intfr"| awk '{print $2}' | cut -c 8-)
 if [ -z ip ];then
 	ip="XXX.XXX.XXX.XXX"
 fi

@@ -2,19 +2,19 @@
 
 monitor=""
 extendRight="$monitor "
-extendLeft="s"
+extendLeft="$monitor "
 extendUp="$monitor "
 extendDown="$monitor "
 duplicate="$monitor "
 
-chosen=$(echo "$extendRight
-	$extendLeft
-	$extendDown
-	$extendUp
-	$duplicate" | rofi -dmenu -i -l 5 -p $monitor)
-echo $chosen
+chosen=$(echo "$extendLeft
+$extendRight
+$extendDown
+$extendUp
+$duplicate
+$killScreen" | rofi -dmenu -i -l 5 -p $monitor)
 case $chosen in
-	"s")
+	$extendLeft)
 		sh ~/.config/scripts/extendMonitor.sh l;;
 	$extendRight)
 		sh ~/.config/scripts/extendMonitor.sh r;;

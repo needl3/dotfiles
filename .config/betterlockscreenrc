@@ -4,15 +4,15 @@ span_image=false
 lock_timeout=300
 fx_list=(dim blur dimblur pixel dimpixel color)
 dim_level=50
-blur_level=0.8
+blur_level=0.9
 pixel_scale=10,1000
 solid_color=333333
 wallpaper_cmd="feh --bg-fill"
 quiet=false
 
 # default theme
-loginbox=1ebbd766
-loginshadow=aaaaaaaa
+loginbox=1ebbd711
+loginshadow=001122ff
 locktext="Konichiwa, siyo-san"
 font="Iosevka"
 ringcolor=1ebbd7ff
@@ -25,7 +25,7 @@ insidewrongcolor=d23c3dff
 timecolor=98c714
 time_format="%H:%M:%S"
 greetercolor=39f1ba
-layoutcolor=ffffffff
+layoutcolor=78fa2d66
 keyhlcolor=d23c3dff
 bshlcolor=d23c3dff
 verifcolor=ffffffff

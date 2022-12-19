@@ -15,7 +15,7 @@ packages_pacman=(xorg-server xorg-xinit xorg-xsetroot xorg-xrandr xbindkeys\
 			)
 
 # All yay packages to install
-packages_yay=(picom-jonaburg-git nerd-fonts-complete)
+packages_yay=(picom-jonaburg-git nerd-fonts-complete betterlockscreen)
 
 # All system services to enable
 services=(mpd iwd dhcpcd)

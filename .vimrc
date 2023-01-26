@@ -10,6 +10,7 @@ set scrolloff=0
 set mouse=a
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 set autoread
+set noshowmode
 let mapleader=","
 " Custom command
 command! Wwq :w|bd
@@ -23,10 +24,10 @@ Plug 'vim-airline/vim-airline-themes' " Vim bottom bar
 Plug 'tpope/vim-fugitive' " Git Info for Airline
 Plug 'ap/vim-css-color'
 Plug 'neoclide/coc.nvim', {'do': 'yarn' }	" Autocompletion
-Plug 'prettier/vim-prettier', {'do': 'yarn'}
+Plug 'prettier/vim-prettier', {'do': 'yarn', 'for': ['javascript', 'typescript', 'javascriptreact', 'typescriptreact']}
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim' " For Files command for fuzzy search
-
+Plug 'maxmellon/vim-jsx-pretty'
 call plug#end()
 
 
@@ -35,10 +36,10 @@ nnoremap <C-b> :NERDTreeToggle<CR>
 nnoremap <C-n> :enew <CR>
 nnoremap <C-l> :bnext<CR>
 nnoremap <C-h> :bprevious<CR>
-nnoremap <C-f> :FZF -e<CR>
-nnoremap <C-f>b :call fzf#vim#buffers()<CR>
+" nnoremap <C-f>b :call fzf#vim#buffers()<CR>
+nnoremap <C-f> :Rg<CR>
 nnoremap <C-p> :call FZFProjectRoot()<CR>
-nnoremap <Leader><space> :term <CR>
+nnoremap <Leader><space> :let $VIMDIR=expand('%:p:h')<CR>:term<CR>cd $VIMDIR<CR>
 
 cnoreabbrev wq Wwq
 
@@ -83,12 +84,14 @@ if has("clipboard")
     endif
 endif
 " ----------------------Variables Section---------------------
-:colorscheme desert
+:colorscheme koehler
 
 " ----------------------Vim prettier autoformat---------------
+let g:prettier#autoformat = 1
 let g:prettier#autoformat_config_present = 1
 let g:prettier#autoformat_require_pragma = 0
 let g:prettier#quickfix_enabled = 0
+
 " ---------------------Airline Configuration-----------------
 let g:airline_powerline_fonts = 1
 

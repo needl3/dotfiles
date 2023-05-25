@@ -40,10 +40,7 @@ export LS_COLORS
 
 # Aliases with color
 alias ls="ls --color"
-alias nf=neofetch
-alias cddwm="cd ~/gitClones/configs/dwm_collection/dwm"
-alias cddwmb="cd ~/gitClones/configs/dwm_collection/dwmblocks"
-alias cdcfg="cd ~/gitClones/configs/.config"
+alias vim="nvim"
 
 neofetch --config ~/.config/neofetch/config-bashrc.conf
 

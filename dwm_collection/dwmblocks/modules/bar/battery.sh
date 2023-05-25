@@ -9,7 +9,7 @@ case $(cat $bat_dir/status) in
         battery_icon=🔋;;
     
     "Discharging")
-        battery_icon=⚡
+        battery_icon="⚡ "
         if [ $battery_percent -lt 20 ]
         then
              notify-send "Low battery!

@@ -14,7 +14,7 @@ static const int vertpad            = 0;       /* vertical padding of bar */
 static const int sidepad            = 0;       /* horizontal padding of bar */
 static const int user_bh            = 0;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 
-static const char *fonts[]          = {"Iosevka Term", "JetBrainsMono Nerd Font:size=10", "monospace:size=12", "JoyPixels:pixelsize=12:" };
+static const char *fonts[]          = {"Iosevka Nerd Font", "JetBrainsMono Nerd Font:size=10", "monospace:size=12", "JoyPixels:pixelsize=12:" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font;style=15";
 
 static const char col_black[] 		= "#000000";
@@ -116,12 +116,12 @@ static Key keys[] = {
 	{ MODKEY,		                XK_Return, spawn,          {.v = rofiapps } },
 //	{ MODKEY|ShiftMask,				XK_space,  spawn,          {.v = rofiwindow } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = roficmd } },
-	{ MODKEY|ShiftMask,				XK_p,      spawn,          {.v = rofiemoji } },
+	{ MODKEY|ShiftMask,		XK_p,      spawn,          {.v = rofiemoji } },
 	{ MODKEY,                       XK_Escape, spawn,          {.v = rofipower } },
 	{ MODKEY|ShiftMask,            	XK_space,  spawn,          {.v = rofiextend} },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,		            	XK_Tab,    focusstack,     {.i = +1 } },
+	{ MODKEY,		        XK_Tab,    focusstack,     {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_Tab,    focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
@@ -130,7 +130,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_h,      setcfact,       {.f = +0.25} },
 	{ MODKEY|ShiftMask,             XK_l,      setcfact,       {.f = -0.25} },
 	{ MODKEY|ShiftMask,             XK_o,      setcfact,       {.f =  0.00} },
-	{ MODKEY|ShiftMask,				XK_Escape, zoom,           {0} },
+	{ MODKEY|ShiftMask,	        XK_Escape, zoom,           {0} },
 	{ MODKEY|Mod4Mask,              XK_u,      incrgaps,       {.i = +1 } },
 	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,      incrgaps,       {.i = -1 } },
 	{ MODKEY|Mod4Mask,              XK_i,      incrigaps,      {.i = +1 } },
@@ -162,8 +162,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_j,	   focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_f,	   tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_j,	   tagmon,         {.i = +1 } },
-	{ MODKEY|ShiftMask,				XK_Right,  spawn,          SHCMD("~/.config/scripts/wallpaper_toggler.sh 1") },
-	{ MODKEY|ShiftMask,				XK_Left,   spawn,          SHCMD("~/.config/scripts/wallpaper_toggler.sh -1") },
+	{ MODKEY|ShiftMask,		XK_Right,  spawn,          SHCMD("~/.config/scripts/wallpaper_toggler.sh 1") },
+	{ MODKEY|ShiftMask,		XK_Left,   spawn,          SHCMD("~/.config/scripts/wallpaper_toggler.sh -1") },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)

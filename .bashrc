@@ -45,7 +45,6 @@ alias cddwm="cd ~/gitClones/configs/dwm_collection/dwm"
 alias cddwmb="cd ~/gitClones/configs/dwm_collection/dwmblocks"
 alias cdcfg="cd ~/gitClones/configs/.config"
 
-
 neofetch --config ~/.config/neofetch/config-bashrc.conf
 
 # Local port forwarding for ssh
@@ -61,11 +60,6 @@ f(){
 	find $1 -type f 2> /dev/null | grep -i $2
 }
 
-gimmeX()
-{
-	$(toggleConservationMode;while [ $(cat /sys/class/power_supply/BAT1/capacity) -lt "$1" ];do sleep 60;cat /sys/class/power_supply/BAT1/capacity; done;toggleConservationMode;exit)&
-	disown
-}
 downloadMusic()
 {
 	# Downloads youtube music playlist
@@ -77,4 +71,4 @@ downloadMusic()
 		echo "No url provided. Please pass playlist url"
 	fi
 }
-alias lc=leetcode
+_JAVA_AWT_WM_NONREPARENTING=1

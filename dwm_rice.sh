@@ -10,8 +10,8 @@ reset=$'\e[0m'
 packages_pacman=(xorg-server xorg-xinit xorg-xsetroot xorg-xrandr xbindkeys\
 				neofetch htop flameshot mpd rofi ranger wget curl redshift\
 				base-devel go nitrogen synaptics pulseaudio pavucontrol\
-				ttf-joypixels ttf-jetbrains-mono libnotify\
-				socat openvpn dunst libcanberra bluez-utils\
+				ttf-joypixels ttf-iosevka-nerd ttf-jetbrains-mono libnotify\
+				socat openvpn dunst libcanberra bluez bluez-utils\
 			)
 
 # All yay packages to install

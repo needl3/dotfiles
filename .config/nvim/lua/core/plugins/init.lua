@@ -25,12 +25,18 @@ return require('packer').startup(function(use)
     use {'akinsho/bufferline.nvim',
         requires = { { 'nvim-tree/nvim-web-devicons' } }
     }
-    use { 
+    use {
         'neovim/nvim-lspconfig',
         'williamboman/mason.nvim',
         'williamboman/mason-lspconfig.nvim'
     }
+    use 'lewis6991/gitsigns.nvim'
     if packer_bootstrap then
         require('packer').sync()
     end
+    use { "hrsh7th/nvim-cmp",
+    requires = {
+        "hrsh7th/cmp-nvim-lsp", "onsails/lspkind-nvim", "L3MON4D3/LuaSnip"
+        }
+    }
 end)

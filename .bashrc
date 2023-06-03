@@ -42,8 +42,6 @@ export LS_COLORS
 alias ls="ls --color"
 alias vim="nvim"
 
-neofetch --config ~/.config/neofetch/config-bashrc.conf
-
 # Local port forwarding for ssh
 sshfwd(){
 	# Grab ssh port from /etc/ssh/sshd_config

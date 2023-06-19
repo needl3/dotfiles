@@ -25,7 +25,7 @@ connect(){
 	networks=()
 	disconnected="FNR>1"
 	n=0
-	for i in $(iwctl station $interface get-networks |  grep '*' | awk '{print NR==1?$4:$1}');do
+        for i in $(iwctl station $interface get-networks | tail -n +5 | awk -F "       " '{print $1}' | awk 'NR==1 {print substr($0, 22)} NR>1 {print $1}');do
 		echo "$n: $i"
 		networks+=( $i )
 		n=$( expr $n + 1 )

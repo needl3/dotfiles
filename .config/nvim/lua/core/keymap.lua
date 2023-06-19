@@ -13,7 +13,8 @@ set.expandtab = true
 set.shiftwidth=4
 set.smarttab = true
 set.autoread = true
-
+set.startofline = true
+set.endofline = true
 
 
 -- Remap the keymaps using nvim set_keymap
@@ -31,5 +32,5 @@ vim.cmd[[
     command! Wwq :w|bd
     cnoreabbrev wq Wwq
     cnoreabbrev q bd!
+    set clipboard+=unnamedplus
 ]]
-

@@ -31,6 +31,7 @@ return require('packer').startup(function(use)
         'williamboman/mason-lspconfig.nvim'
     }
     use 'lewis6991/gitsigns.nvim'
+    use {"akinsho/toggleterm.nvim", tag = '*'}
     if packer_bootstrap then
         require('packer').sync()
     end
@@ -39,4 +40,6 @@ return require('packer').startup(function(use)
         "hrsh7th/cmp-nvim-lsp", "onsails/lspkind-nvim", "L3MON4D3/LuaSnip"
         }
     }
+    use 'wakatime/vim-wakatime'
+
 end)

@@ -40,7 +40,6 @@ export LS_COLORS
 
 # Aliases with color
 alias ls="ls --color"
-alias vim="nvim"
 
 # Local port forwarding for ssh
 sshfwd(){
@@ -67,3 +66,4 @@ downloadMusic()
 	fi
 }
 _JAVA_AWT_WM_NONREPARENTING=1
+. "$HOME/.cargo/env"

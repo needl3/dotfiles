@@ -67,3 +67,4 @@ downloadMusic()
 }
 _JAVA_AWT_WM_NONREPARENTING=1
 . "$HOME/.cargo/env"
+neofetch --config $HOME/.config/neofetch/config-bashrc.conf

@@ -9,16 +9,16 @@ reset=$'\e[0m'
 # All pacman packages to install
 packages_pacman=(xorg-server xorg-xinit xorg-xsetroot xorg-xrandr xbindkeys\
 				neofetch htop flameshot mpd rofi ranger wget curl redshift\
-				base-devel go nitrogen synaptics pulseaudio pavucontrol\
+				base-devel go nitrogen synaptics pulseaudio pavucontrol lazygit\
 				ttf-joypixels ttf-iosevka-nerd ttf-jetbrains-mono libnotify\
-				socat openvpn dunst libcanberra bluez bluez-utils\
+				socat openvpn dunst libcanberra bluez bluez-utils lm_sensors\
 			)
 
 # All yay packages to install
-packages_yay=(picom-jonaburg-git nerd-fonts-complete betterlockscreen)
+packages_yay=(nerd-fonts-complete betterlockscreen ttf-iosevka)
 
 # All system services to enable
-services=(mpd iwd dhcpcd)
+services=(iwd dhcpcd bluetooth)
 
 # Directory containing all source files
 base_dir=$(realpath $(dirname "$0"))
@@ -31,7 +31,6 @@ placeFiles(){
 	for i in ${dotfiles[@]};do
 		sudo ln -sf $base_dir/$i /home/$SUDO_USER
 	done
-	sudo cp 70-synaptics.conf /usr/share/X11/xorg.conf.d/70-synaptics.conf
 	sudo cp .bashrc /root/
 }
 
@@ -98,8 +97,7 @@ configureSSH(){
 		
 		# echo "[+] Not enabling ssh at system start."
 		systemctl enable sshd
-
-		# Preparing directories
+# Preparing directories
 		mkdir /home/$SUDO_USER/.ssh 2> /dev/null
 
 		
@@ -146,6 +144,7 @@ installSt(){
 	patch -p1 < ../focus-unfocus.diff
 	echo "${blue}[+] Patching fix for anysize bug${reset}"
 	patch -p1 < ../anysize-bug-fix.diff
+        cp ../config.h .
 	sudo make clean install
 	cd ../
 	rm -rf st-0.8.5*
@@ -178,15 +177,13 @@ fi
 # Install all dependencies
 pacman -Syyu ${packages_pacman[@]} --noconfirm
 
-configureDotfiles
-
 configureAurHelper
 
 echo "${packages_yay[@]}"
 read -p "${green}Do you want to install above packages from AUR?${reset}" ch
 if [[ $ch == "y" || $ch == "Y" ]];then
 	echo "${blue}[+] Installing aur packages${reset}"
-	sudo yay -S ${packages_yay[@]} --cleanafter --removemake --noredownload
+	sudo -u $SUDO_USER yay -S ${packages_yay[@]} --cleanafter --removemake --noredownload
 else
 	echo "${red}[-] Skipping AUR packages${red}"
 fi

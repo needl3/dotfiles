@@ -32,8 +32,8 @@ int main(int argc, char **argv){
 		sign = -1;
 
 	std::string max_val, current_val;
-	char brightness_file[] = "/sys/class/backlight/intel_backlight/brightness";
-	char max_brightness_file[] = "/sys/class/backlight/intel_backlight/max_brightness";
+	char brightness_file[] = "/sys/class/backlight/amdgpu_bl1/brightness";
+	char max_brightness_file[] = "/sys/class/backlight/amdgpu_bl1/max_brightness";
 
 	std::fstream mfin(max_brightness_file, std::ios::in);
 	std::fstream fin(brightness_file, std::ios::in);

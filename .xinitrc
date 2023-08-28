@@ -1,20 +1,7 @@
 #!/bin/bash
-
-initializeNetwork(){
-    # Make the dhcpcd binary setuid during arch installation
-    # Then only this sequence will run
-    # If network card is down or powered off
-    sudo rfkill unblock all # Maybe you want to include wirelesscard here instead of all using rfkill list
-    ip link set wlan0 up
-
-
-    # Configure Internet Connection
-    iwctl station wlan0 connect Needle
-    dhcpcd wlan0
-}
-initializePulseAudio(){
-    pulseaudio -D
-}
+userresources=$HOME/.Xresources
+usermodmap=$HOME/.Xmodmap
+sysresources=/etc/X11/xinit/.Xresources
 
 initializeMiscServices(){
     # Please save my eyes
@@ -40,6 +27,7 @@ initializeMiscServices(){
 
     # Disable touchpad while typing
     syndaemon -i 0.5 -t -K -R -d
+
 }
 initializeMiscServices &
 

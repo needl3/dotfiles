@@ -24,9 +24,6 @@ initializeMiscServices(){
     # Restore my waifu
     nitrogen --restore
 
-    # Start compositor
-    picom --experimental-backend -b
-
     dwmblocks &
 
     xbindkeys -f ~/.xbindkeysrc 
@@ -47,6 +44,4 @@ initializeMiscServices(){
 initializeMiscServices &
 
 # Start WM
-while :; do
-	dwm 2> ~/.dwm.log
-done
+dwm 2> ~/.dwm.log

@@ -10,8 +10,8 @@
 int main(){
 	std::string txt;
 
-	std::fstream fin("/sys/devices/pci0000:00/0000:00:1f.0/PNP0C09:00/VPC2004:00/conservation_mode", std::ios::in);
-	std::fstream fout("/sys/devices/pci0000:00/0000:00:1f.0/PNP0C09:00/VPC2004:00/conservation_mode", std::ios::out);
+	std::fstream fin("/sys/devices/pci0000:00/0000:00:14.3/PNP0C09:00/VPC2004:00/conservation_mode", std::ios::in);
+	std::fstream fout("/sys/devices/pci0000:00/0000:00:14.3/PNP0C09:00/VPC2004:00/conservation_mode", std::ios::out);
 
 	if (!fout.is_open()){
 		std::cout <<"[-] Cannot open file.";

@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-bat_dir="/sys/class/power_supply/BAT1"
+bat_dir="/sys/class/power_supply/BAT*"
 
 battery_percent=$(cat $bat_dir/capacity)
 

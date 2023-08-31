@@ -28,8 +28,12 @@ initializeMiscServices(){
     # Disable touchpad while typing
     syndaemon -i 0.5 -t -K -R -d
 
+    picom --experimental-backend&
+
 }
 initializeMiscServices &
 
 # Start WM
-dwm 2> ~/.dwm.log
+while :;do
+    dwm 2> ~/.dwm.log
+done

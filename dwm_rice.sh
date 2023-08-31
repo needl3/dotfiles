@@ -12,6 +12,7 @@ packages_pacman=(xorg-server xorg-xinit xorg-xsetroot xorg-xrandr xbindkeys\
 				base-devel go nitrogen synaptics pulseaudio pavucontrol lazygit\
 				ttf-joypixels ttf-iosevka-nerd ttf-jetbrains-mono libnotify\
 				socat openvpn dunst libcanberra bluez bluez-utils lm_sensors\
+                                meson ninja\
 			)
 
 # All yay packages to install
@@ -150,6 +151,7 @@ installSt(){
 	rm -rf st-0.8.5*
 	cd ../
 }
+
 configureDotfiles(){
 	echo "${blue}[+] Configuring dotfiles${reset}"
 	sudo mkdir /home/$SUDO_USER/.config
@@ -157,6 +159,7 @@ configureDotfiles(){
 	chown -R $SUDO_USER:$SUDO_USER .config/
 	placeFiles
 }
+
 configureAurHelper(){
 	echo "${blue}[+] Configuring YAY(Aur Helper)${reset}"
 	sudo -u $SUDO_USER git clone https://aur.archlinux.org/yay-git.git
@@ -166,8 +169,18 @@ configureAurHelper(){
 	rm -rf yay-git
 }
 
-# Program Entry
+configurePicom(){
+    git clone https://github.com/pijulius/picom
+    cd picom
+    meson setup --buildtype=release build
+    ninja -C build
+    sudo mv build/src/picom /usr/local/bin
+    cp -r ../.config/picom /home/$USER/.config
+    cd ..
+    sudo rm -r picom    # sudo because to avoid confirmation for git object deletion
+}
 
+# Program Entry
 #Check for root user
 if [ $UID != 0 ];then
 	echo "${red}Run it as root${reset}"
@@ -204,6 +217,10 @@ configureDotfiles
 # Enable all services
 systemctl enable ${services[@]}
 
+#
+# Haven't tested so placing at last
+#
+configurePicom
 # Reboot for changes to properly take effect
 read -p "${green}Reboot machine to render proper changes. Reboot Now? (Y/N): ${reset}" reb
 if [[ $reb == "y" || $reb == "Y" ]];then

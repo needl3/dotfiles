@@ -69,5 +69,5 @@ fi
 
 read -p "[+] Reconfigured Xorg. Relogin to apply effects?(y/N)" relogin
 if [[ $relogin == "y" ]];then
-    pkill -TERM dwm
+    systemctl logout
 fi

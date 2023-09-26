@@ -23,7 +23,6 @@ then
 elif [ "$selected_option" == "$sleep" ]
 then
     systemctl suspend
-    betterlockscreen -l dimblur
 else
     echo "No match" 
 fi

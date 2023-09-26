@@ -18,9 +18,6 @@ packages_pacman=(xorg-server xorg-xinit xorg-xsetroot xorg-xrandr xbindkeys\
 # All yay packages to install
 packages_yay=(nerd-fonts-complete betterlockscreen ttf-iosevka)
 
-# All system services to enable
-services=(iwd dhcpcd bluetooth)
-
 # Directory containing all source files
 base_dir=$(realpath $(dirname "$0"))
 src_dir="$base_dir/src"
@@ -180,6 +177,16 @@ configurePicom(){
     sudo rm -r picom    # sudo because to avoid confirmation for git object deletion
 }
 
+configureSystemdUnits(){
+    services=(iwd dhcpcd bluetooth)
+
+    sudo cp resume@.service /etc/systemd/system/resume@.service
+    systemctl enable resume@$SUDO_USER.service
+
+    # Enable all services
+    systemctl enable ${services[@]}
+}
+
 # Program Entry
 #Check for root user
 if [ $UID != 0 ];then
@@ -213,9 +220,7 @@ installDwm
 installDwmblocks
 installSt
 configureDotfiles
-
-# Enable all services
-systemctl enable ${services[@]}
+configureSystemdUnits
 
 #
 # Haven't tested so placing at last

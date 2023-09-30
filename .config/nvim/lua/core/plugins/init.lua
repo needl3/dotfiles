@@ -11,7 +11,7 @@ end
 
 local packer_bootstrap = ensure_packer()
 
-return require('packer').startup(function(use)
+require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.1',
@@ -43,3 +43,20 @@ return require('packer').startup(function(use)
     use 'wakatime/vim-wakatime'
     use 'ThePrimeagen/vim-be-good'
 end)
+
+
+local enabled_plugins = {
+    "lualine",
+    "bufferline",
+    "nvim-tree",
+    "treesitter",
+    "telescope",
+    "theme",
+    "lspconfig",
+    "nvim-cmp",
+    "gitsigns",
+    "lazygit"
+};
+for _, plugin in pairs(enabled_plugins) do
+    require('core.plugins.plugin_config.'..plugin)
+end

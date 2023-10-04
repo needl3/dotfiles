@@ -41,15 +41,6 @@ export LS_COLORS
 # Aliases with color
 alias ls="ls --color"
 
-# Local port forwarding for ssh
-sshfwd(){
-	# Grab ssh port from /etc/ssh/sshd_config
-	sshPort=$(cat /etc/ssh/sshd_config | sed -n 's/^Port //p')
-
-	# 9999 is my portmap.host or any relay server redirected port
-	socat tcp-l:6999,reuseaddr,fork tcp:localhost:$sshPort &
-}
-
 f(){
 	find $1 -type f 2> /dev/null | grep -i $2
 }
@@ -68,3 +59,7 @@ downloadMusic()
 _JAVA_AWT_WM_NONREPARENTING=1
 . "$HOME/.cargo/env"
 neofetch --config $HOME/.config/neofetch/config-bashrc.conf
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH=$BUN_INSTALL/bin:$PATH

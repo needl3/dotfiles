@@ -9,16 +9,16 @@ local on_attach = function(client, bufnr)
     local bufopts = { noremap = true, silent = true, buffer = bufnr }
     local setKeymap = vim.keymap.set
 
-    setKeymap('n', 'gD', vim.lsp.buf.declaration, bufopts)
-    setKeymap('n', 'gd', vim.lsp.buf.definition, bufopts)
-    setKeymap('n', 'K', vim.lsp.buf.hover, bufopts)
-    setKeymap('n', 'gi', vim.lsp.buf.implementation, bufopts)
-    setKeymap('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-    setKeymap('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
-    setKeymap('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-    setKeymap('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-    setKeymap('n', 'gr', vim.lsp.buf.references, bufopts)
-    setKeymap('n', '<space>f', vim.lsp.buf.format, bufopts)
+  setKeymap('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  setKeymap('n', 'gd', vim.lsp.buf.definition, bufopts)
+  setKeymap('n', 'K', vim.lsp.buf.hover, bufopts)
+  setKeymap('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  setKeymap('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  setKeymap('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
+  setKeymap('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  setKeymap('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  setKeymap('n', 'gr', vim.lsp.buf.references, bufopts)
+  setKeymap('n', '<space>f', vim.lsp.buf.format, bufopts)
 end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()

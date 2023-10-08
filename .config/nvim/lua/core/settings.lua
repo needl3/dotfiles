@@ -10,17 +10,16 @@ set.mouse = a
 set.tabstop = 8
 set.softtabstop = 0
 set.expandtab = true
-set.shiftwidth=4
+set.shiftwidth = 2
 set.smarttab = true
 set.autoread = true
 set.startofline = true
 set.endofline = true
 
 -- Overriding default vim commands
-vim.cmd[[
+vim.cmd [[
     command! Wwq :w|bd
     cnoreabbrev wq Wwq
     cnoreabbrev q bd!
     set clipboard+=unnamedplus
-    autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
 ]]

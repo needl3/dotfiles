@@ -1,12 +1,12 @@
 local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-        vim.cmd [[packadd packer.nvim]]
-        return true
-    end
-    return false
+  local fn = vim.fn
+  local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
 end
 
 local packer_bootstrap = ensure_packer()
@@ -41,22 +41,26 @@ require('packer').startup(function(use)
         }
     }
     use 'wakatime/vim-wakatime'
-    use 'ThePrimeagen/vim-be-good'
+    use({
+        "jose-elias-alvarez/null-ls.nvim",
+        requires = { "nvim-lua/plenary.nvim" },
+    })
 end)
 
 
 local enabled_plugins = {
-    "lualine",
-    "bufferline",
-    "nvim-tree",
-    "treesitter",
-    "telescope",
-    "theme",
-    "lspconfig",
-    "nvim-cmp",
-    "gitsigns",
-    "lazygit"
+    'lualine',
+    'bufferline',
+    'nvim-tree',
+    'treesitter',
+    'telescope',
+    'theme',
+    'lspconfig',
+    'nvim-cmp',
+    'gitsigns',
+    'lazygit',
+    'null-ls'
 };
 for _, plugin in pairs(enabled_plugins) do
-    require('core.plugins.plugin_config.'..plugin)
+    require('core.plugins.plugin_config.' .. plugin)
 end

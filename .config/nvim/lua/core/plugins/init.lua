@@ -45,6 +45,8 @@ require('packer').startup(function(use)
         "jose-elias-alvarez/null-ls.nvim",
         requires = { "nvim-lua/plenary.nvim" },
     })
+    use ({"lukas-reineke/indent-blankline.nvim"})
+    use({"andweeb/presence.nvim"})
 end)
 
 
@@ -59,7 +61,9 @@ local enabled_plugins = {
     'nvim-cmp',
     'gitsigns',
     'lazygit',
-    'null-ls'
+    'null-ls',
+    'indent-blankline',
+    "presence"
 };
 for _, plugin in pairs(enabled_plugins) do
     require('core.plugins.plugin_config.' .. plugin)

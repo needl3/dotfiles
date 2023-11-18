@@ -14,7 +14,7 @@ local packer_bootstrap = ensure_packer()
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.1',
+        'nvim-telescope/telescope.nvim', tag = '0.1.3',
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
 
@@ -63,7 +63,6 @@ local enabled_plugins = {
     'lazygit',
     'null-ls',
     'indent-blankline',
-    "presence"
 };
 for _, plugin in pairs(enabled_plugins) do
     require('core.plugins.plugin_config.' .. plugin)

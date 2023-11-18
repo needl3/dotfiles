@@ -4,10 +4,6 @@ usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
 
 initializeMiscServices(){
-    # Please save my eyes
-    redshift -x
-    redshift -O 3000
-
     # Restore my waifu
     nitrogen --restore
 

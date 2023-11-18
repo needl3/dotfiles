@@ -17,7 +17,8 @@ done
 
 PRIMARY="$(xrandr --listactivemonitors | awk 'FNR==2 {print $4}')"
 SECONDARY="$(xrandr --listactivemonitors | awk 'FNR==3 {print $4}')"
-[[ $SECONDARY == "" ]] && SECONDARY="HDMI1"
+
+[[ $SECONDARY == "" ]] && SECONDARY="HDMI-1-0"
 xrandr --output "$SECONDARY" --auto
 
 if [[ $1 == "r" ]];then

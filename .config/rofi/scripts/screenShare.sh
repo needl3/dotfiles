@@ -1,19 +1,27 @@
 #!/bin/bash
 
 monitor=""
-extendRight="$monitor "
-extendLeft="$monitor "
-extendUp="$monitor "
-extendDown="$monitor "
-duplicate="$monitor "
+prepareSingleSetup="     Prepare single setup"
+prepareDualSetup="$monitor     $monitor  Prepare dual setup"
+extendRight="$monitor     Extend right"
+extendLeft="$monitor     Extend Left"
+extendUp="$monitor     Extend up"
+extendDown="$monitor     Extend down"
+duplicate="$monitor $monitor  Duplicate"
 
-chosen=$(echo "$extendLeft
+chosen=$(echo "$prepareSingleSetup
+$prepareDualSetup
+$extendLeft
 $extendRight
 $extendDown
 $extendUp
 $duplicate
 $killScreen" | rofi -dmenu -i -l 5 -p $monitor)
 case $chosen in
+	$prepareSingleSetup)
+		st -e sudo sh ~/.config/scripts/nvidia_toggle_xorg.sh --amd;;
+	$prepareDualSetup)
+		st -e sudo sh ~/.config/scripts/nvidia_toggle_xorg.sh --multi-monitor;;
 	$extendLeft)
 		sh ~/.config/scripts/extendMonitor.sh l;;
 	$extendRight)

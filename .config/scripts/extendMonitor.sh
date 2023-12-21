@@ -18,21 +18,23 @@ done
 PRIMARY="$(xrandr --listactivemonitors | awk 'FNR==2 {print $4}')"
 SECONDARY="$(xrandr --listactivemonitors | awk 'FNR==3 {print $4}')"
 
+RES="$(xrandr | grep "\*" | awk '{print $1}' | head -n 1)"
+
 [[ $SECONDARY == "" ]] && SECONDARY="HDMI-1-0"
 xrandr --output "$SECONDARY" --auto
 
 if [[ $1 == "r" ]];then
-	xrandr --output "$PRIMARY" --left-of "$SECONDARY"
+	xrandr --output "$PRIMARY" --mode $RES --left-of "$SECONDARY"
 elif [[ $1 == "l" ]];then
-	xrandr --output "$PRIMARY" --right-of "$SECONDARY"
+	xrandr --output "$PRIMARY" --mode $RES --right-of "$SECONDARY"
 elif [[ $1 == "u" ]];then
-	xrandr --output "$PRIMARY" --below "$SECONDARY"
+	xrandr --output "$PRIMARY" --mode $RES --below "$SECONDARY" 
 elif [[ $1 == "d" ]];then
-	xrandr --output "$PRIMARY" --above "$SECONDARY"
+	xrandr --output "$PRIMARY" --mode $RES --above "$SECONDARY"
 elif [[ $1 == "k" ]];then
 	xrandr --output "$SECONDARY" --off
 elif [[ $1 == "m" ]];then
-	xrandr --output "$SECONDARY" --auto --scale-from 1366x768 --output "$PRIMARY" 
+	xrandr --output "$SECONDARY" --auto --mode $RES --same-as "$PRIMARY"
 else
 	echo "${YELLOW}Usage: ./extendMonitor.sh {l/r/u/d}${ENDCOLOR}"
 	if notify-send -v &> /dev/null;then

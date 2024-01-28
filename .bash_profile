@@ -1,5 +1,5 @@
 if [[ "$(tty)" == "/dev/tty1" ]];then
-	pgrep dwm || startx
+Hyprland
 fi
 
 export PATH="~/.local/bin:$PATH"

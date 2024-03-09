@@ -24,7 +24,7 @@ case $selected in
         $logout)
 			killall -u siyo;;
         $lock)
-                swaylock;;
+                        hyprlock;;
         *)
                 ;;
 esac

@@ -16,7 +16,7 @@ packages_pacman=(neofetch htop flameshot mpd rofi ranger wget curl redshift\
                   base-devel go synaptics pulseaudio pavucontrol lazygit\
                   ttf-joypixels ttf-iosevka-nerd ttf-jetbrains-mono libnotify\
                   socat openvpn dunst libcanberra bluez bluez-utils lm_sensors\
-                  meson ninja brightnessctl\
+                  meson ninja brightnessctl cmake kitty\
                 )
 
 # All yay packages to install
@@ -36,28 +36,6 @@ configureConservationMode(){
 
 	# Initiate conservation mode
 	toggleConservationMode
-}
-
-installSt(){
-	echo "${blue}[+] Installing Simple Terminal(ST)${blue}"
-	cd st
-	wget https://dl.suckless.org/st/st-0.8.5.tar.gz
-	tar -xf st-0.8.5.tar.gz
-	cd st-0.8.5
-
-	echo "${blue}[+] Patching scroll+overflow${reset}"
-	patch -p1 < ../st-scroll-overflow.diff
-	echo "[+] Patching alpha"
-	patch -p1 < ../alpha.diff
-	echo "${blue}[+] Patching focus-unfocus effect${reset}"
-	patch -p1 < ../focus-unfocus.diff
-	echo "${blue}[+] Patching fix for anysize bug${reset}"
-	patch -p1 < ../anysize-bug-fix.diff
-        cp ../config.h .
-	sudo make clean install
-	cd ../
-	rm -rf st-0.8.5*
-	cd ../
 }
 
 configureDotfiles(){
@@ -90,6 +68,16 @@ configureSystemdUnits(){
     systemctl enable ${services[@]}
 }
 
+configureHyprlock(){
+    git clone https://github.com/hyprwm/hyprlock/
+    cd hyprlock
+    cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -S . -B ./build
+    cmake --build ./build --config Release --target hyprlock -j`nproc 2>/dev/null || getconf NPROCESSORS_CONF`
+    sudo cmake --install build
+    cd ..
+    rm -rf hyprlock
+}
+
 # Program Entry
 #Check for root user
 if [ $UID != 0 ];then
@@ -118,6 +106,7 @@ configureConservationMode
 installSt
 configureDotfiles
 configureSystemdUnits
+configureHyprlock
 
 # Reboot for changes to properly take effect
 read -p "${green}Reboot machine to render proper changes. Reboot Now? (Y/N): ${reset}" reb

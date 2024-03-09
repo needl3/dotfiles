@@ -99,6 +99,7 @@
         "timezone": "Asia/Kathmandu",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "on-click": "exec sh ~/.config/scripts/date.sh",
+        "format": "{:%I:%M %p}"
     },
     "cpu": {
         "format": "{usage}%  ",
@@ -136,7 +137,6 @@
         "on-click": "sh ~/.config/scripts/conservation_mode_toggle.sh toggle",
         "on-click-right": "sh ~/.config/scripts/conservation_mode_toggle.sh set",
         "interval": 1,
-        "exec": "sh ~/.config/scripts/battery_notification.sh"
     },
     "battery#bat2": {
         "bat": "BAT2"
@@ -148,23 +148,24 @@
         "tooltip-format": "{ifname} via {gwaddr}  ",
         "format-linked": "{ifname} (No IP)  ",
         "format-disconnected": "Disconnected ⚠ ",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "on-click": "sh ~/.config/scripts/wifi.sh connect"
     },
     "pulseaudio": {
         // "scroll-step": 10, // %, can be a float
         "format": "{volume}%{icon} {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
         "format-source": "{volume}%  ",
         "format-source-muted": "",
         "format-icons": {
-            "headphone": "",
+            "headphone": " ",
             "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
+            "headset": " ",
+            "phone": " ",
+            "portable": " ",
+            "car": "",
             "default": ["", "", ""]
         },
         "on-click": "pavucontrol"

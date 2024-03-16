@@ -57,6 +57,9 @@ downloadMusic()
 	fi
 }
 _JAVA_AWT_WM_NONREPARENTING=1
+export _JAVA_AWT_WM_NONREPARENTING=1
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 . "$HOME/.cargo/env"
 neofetch --config $HOME/.config/neofetch/config-bashrc.conf
 

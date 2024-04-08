@@ -20,7 +20,9 @@ case $selected in
         $reboot)
 			systemctl reboot;;
         $sleep)
-			systemctl suspend;;
+                        hyprlock&
+			systemctl suspend
+                        ;;
         $logout)
 			killall -u siyo;;
         $lock)

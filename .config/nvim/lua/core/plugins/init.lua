@@ -51,6 +51,7 @@ require('packer').startup(function(use)
     'xeluxee/competitest.nvim',
     requires = { 'MunifTanjim/nui.nvim' },
   }
+  --[[
   use {
     "Exafunction/codeium.nvim",
     requires = {
@@ -60,6 +61,13 @@ require('packer').startup(function(use)
     config = function()
       require("codeium").setup({
       })
+    end
+  }
+  ]]--
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
     end
   }
 end)
@@ -78,7 +86,8 @@ local enabled_plugins = {
   'lazygit',
   'null-ls',
   'indent-blankline',
-  'compitest'
+  'compitest',
+  'comment'
 };
 for _, plugin in pairs(enabled_plugins) do
   require('core.plugins.plugin_config.' .. plugin)

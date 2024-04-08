@@ -2,7 +2,7 @@
 @define-color base05 #d8d8d8;
 @define-color base09 #dc9656;
 @define-color base00 rgba(12, 12, 12, 0.5);
-@define-color base01 rgba(12, 12, 12, 0.5);
+@define-color base01 rgba(12, 12, 12, 0.0);
 @define-color base02 rgba(12, 12, 12, 0.3);
 @define-color base03 rgba(12, 12, 12, 0.5);
 @define-color base06 rgba(12, 12, 12, 0.5);

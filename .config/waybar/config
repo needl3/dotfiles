@@ -7,7 +7,7 @@
     // Choose the order of the modules
     "modules-left": ["hyprland/workspaces", "sway/scratchpad"],
     "modules-center": ["hyprland/window"],
-    "modules-right": ["pulseaudio", "backlight", "network", "custom/updates", "cpu", "memory", "temperature", "battery", "clock", "tray"],
+    "modules-right": ["network", "pulseaudio", "backlight", "custom/updates", "cpu", "memory", "temperature", "battery", "clock", "tray"],
     // Modules configuration
      "hyprland/workspaces": {
          "disable-scroll": true,
@@ -136,13 +136,13 @@
     },
     "network": {
         // "interface": "wlan0", // (Optional) To force the use of this interface
-        "format-wifi": "{essid}  ",
+        "format-wifi": "{bandwidthTotalBytes} {essid}  ",
         "format-ethernet": "{ipaddr}/{cidr}  ",
         "tooltip-format": "{ifname} via {gwaddr}  ",
         "format-linked": "{ifname} (No IP)  ",
         "format-disconnected": "Disconnected ⚠ ",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "sh ~/.config/scripts/wifi.sh connect"
+        "on-click": "kitty ~/.config/scripts/wifi.sh connect",
+        "interval": 3,
     },
     "pulseaudio": {
         // "scroll-step": 10, // %, can be a float

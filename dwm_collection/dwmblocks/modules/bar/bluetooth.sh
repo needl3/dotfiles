@@ -31,7 +31,7 @@ function connect(){
 			echo "${yellow}----------------------------${reset}"
 			echo "${blue}Stop scanning if you found your devices: Ctrl+C${reset}"
 			for i in $(bluetoothctl devices | awk '{print $2}');do
-				bluetoothctl remove $i
+				bluetoothctl remove $i > /dev/null
 			done
 			bluetoothctl scan on
 			dev=$(bluetoothctl devices | tr ' ' '\n')

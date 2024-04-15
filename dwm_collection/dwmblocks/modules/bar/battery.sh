@@ -30,4 +30,4 @@ case $(cat $bat_dir/status) in
         battery_icon=🚫;;
 esac
 
-printf "$battery_icon$battery_percent"
+printf "$battery_icon $battery_percent"

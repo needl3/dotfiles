@@ -73,8 +73,9 @@ else
 	elif ! ip a | grep $interface | grep inet > /dev/null;then
 		icon=📡
 	elif iwctl station $interface show | grep Connected > /dev/null;then
-		icon=💚
+                icon=$(iwctl station wlan0 show | grep 'Connected network' | awk '{print $3}')
 	fi
 
-	printf "$icon"
+        speed=$($(dirname "$0")/network.sh)
+	printf "$icon $speed"
 fi

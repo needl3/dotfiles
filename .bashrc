@@ -41,25 +41,32 @@ export LS_COLORS
 # Aliases with color
 alias ls="ls --color"
 
+#############################
+# Utility Function Section ##
+#############################
 f(){
 	find $1 -type f 2> /dev/null | grep -i $2
 }
 
-downloadMusic()
-{
-	# Downloads youtube music playlist
-	# Usage: downloadMusic <playlist url with or without index parameter>
-	if [ "$1" != "" ];
-	then
-		youtube-dl --ignore-errors --format bestaudio --extract-audio --audio-format mp3 --audio-quality 160K --output "%(title)s.%(ext)s" --yes-playlist "https://youtube.com/playlist?$(echo $1 | grep -E -o 'list=.*' | grep -E -o '^[^&]+')"
-	else
-		echo "No url provided. Please pass playlist url"
-	fi
+yay(){
+  pushd .
+  cd /tmp
+  git clone https://aur.archlinux.org/$1
+  cd $1
+  makepkg -si
+  cd ..
+  rm -rf /tmp/$1
+  popd
 }
-_JAVA_AWT_WM_NONREPARENTING=1
-. "$HOME/.cargo/env"
+
+export _JAVA_AWT_WM_NONREPARENTING=1
+export PATH=$PATH:/usr/local/go/bin/
+export PATH=$HOME/.rbenv/bin:$PATH
 neofetch --config $HOME/.config/neofetch/config-bashrc.conf
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH=$BUN_INSTALL/bin:$PATH
+
+# #################
+# Eval Section  ###
+# #################
+eval "$(rbenv init -)"
+

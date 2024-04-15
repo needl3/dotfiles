@@ -15,5 +15,5 @@ then
 	fi
 	cat /tmp/nepali_date | tr '\n' ' '
 else
-	printf "📅$( date +%I:%M\ %p)"
+	printf "$( date '+%A %I:%M %p')"
 fi

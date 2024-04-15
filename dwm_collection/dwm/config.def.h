@@ -12,7 +12,7 @@ static const unsigned int gappov =
 static int smartgaps =
     1; /* 1 means no outer gap when there is only one window */
 static const int showbar = 1; /* 0 means no bar */
-static const int topbar = 1;  /* 0 means bottom bar */
+static const int topbar = 0;  /* 0 means bottom bar */
 static const int vertpad = 0; /* vertical padding of bar */
 static const int sidepad = 0; /* horizontal padding of bar */
 static const int user_bh = 0; /* 0 means that dwm will calculate bar height, >=
@@ -36,7 +36,7 @@ static const unsigned int alphas[][3] = {
 };
 
 /* tagging */
-static const char *tags[] = {"1", "2", "3", "4", "5", "6"};
+static const char *tags[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
 
 static const Rule rules[] = {
     /* xprop(1):
@@ -111,7 +111,7 @@ static const char *rofipower[] = {
 static const char *rofiextend[] = {
     "/home/siyo/.config/rofi/scripts/screenShare.sh"};
 
-static const char *termcmd[] = {"st", NULL};
+static const char *termcmd[] = {"kitty", NULL};
 
 /* commands spawned when clicking statusbar, the mouse button pressed is
  * exported as BUTTON */

@@ -4,12 +4,12 @@ usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
 
 initializeMiscServices(){
-    # Restore my waifu
     nitrogen --restore
 
-    goblocks &
+    dwmblocks &
 
     xbindkeys -f ~/.xbindkeysrc 
+
 
     xmodmap .Xmodmap 
 
@@ -29,7 +29,12 @@ initializeMiscServices(){
     picom --experimental-backend&
 
 }
+
+xset b off
+
 initializeMiscServices &
 
 # Start WM
-dwm 2> ~/.dwm.log
+while :; do
+    dwm 2> ~/.dwm.log
+done

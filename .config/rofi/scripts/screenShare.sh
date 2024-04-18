@@ -8,6 +8,7 @@ extendLeft="$monitor     Extend Left"
 extendUp="$monitor     Extend up"
 extendDown="$monitor     Extend down"
 duplicate="$monitor $monitor  Duplicate"
+killScreen="$monitor X Stop Sharing"
 
 chosen=$(echo "$prepareSingleSetup
 $prepareDualSetup
@@ -32,6 +33,8 @@ case $chosen in
 		sh ~/.config/scripts/extendMonitor.sh d;;
 	$duplicate)
 		sh ~/.config/scripts/extendMonitor.sh m;;
+        $killScreen)
+		sh ~/.config/scripts/extendMonitor.sh k;;
 	*)
 		echo "Invalid extension";;
 esac

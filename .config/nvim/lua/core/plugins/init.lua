@@ -47,6 +47,7 @@ require('packer').startup(function(use)
     })
     use ({"lukas-reineke/indent-blankline.nvim"})
     use({"andweeb/presence.nvim"})
+    use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
 end)
 
 
@@ -63,6 +64,7 @@ local enabled_plugins = {
     'lazygit',
     'null-ls',
     'indent-blankline',
+    'nvim-ufo'
 };
 for _, plugin in pairs(enabled_plugins) do
     require('core.plugins.plugin_config.' .. plugin)

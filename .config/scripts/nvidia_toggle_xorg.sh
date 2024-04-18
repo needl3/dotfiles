@@ -56,7 +56,7 @@ EndSection
 
 Section \"Device\"
     Identifier     \"AMD\"
-    Driver         \"amdgpu\"
+    Driver         \"modesetting\"
     VendorName     \"Advanced Micro Devices\"
     BusID          \"PCI:$RADEON_BUS_ID:0\"
 EndSection

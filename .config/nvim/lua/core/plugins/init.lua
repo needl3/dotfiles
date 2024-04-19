@@ -12,60 +12,69 @@ end
 local packer_bootstrap = ensure_packer()
 
 require('packer').startup(function(use)
-    use 'wbthomason/packer.nvim'
-    use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.3',
-        requires = { { 'nvim-lua/plenary.nvim' } }
-    }
+  use 'wbthomason/packer.nvim'
+  use {
+    'nvim-telescope/telescope.nvim', tag = '0.1.3',
+    requires = { { 'nvim-lua/plenary.nvim' } }
+  }
 
-    use 'nvim-treesitter/nvim-treesitter'
-    use 'ellisonleao/gruvbox.nvim'
-    use 'nvim-tree/nvim-tree.lua'
-    use 'nvim-lualine/lualine.nvim'
-    use { 'akinsho/bufferline.nvim',
-        requires = { { 'nvim-tree/nvim-web-devicons' } }
+  use 'nvim-treesitter/nvim-treesitter'
+  use 'ellisonleao/gruvbox.nvim'
+  use 'nvim-tree/nvim-tree.lua'
+  use 'nvim-lualine/lualine.nvim'
+  use { 'akinsho/bufferline.nvim',
+    requires = { { 'nvim-tree/nvim-web-devicons' } }
+  }
+  use {
+    'neovim/nvim-lspconfig',
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim'
+  }
+  use 'lewis6991/gitsigns.nvim'
+  use { "akinsho/toggleterm.nvim", tag = '*' }
+  if packer_bootstrap then
+    require('packer').sync()
+  end
+  use { "hrsh7th/nvim-cmp",
+    requires = {
+      "hrsh7th/cmp-nvim-lsp", "onsails/lspkind-nvim", "L3MON4D3/LuaSnip"
     }
-    use {
-        'neovim/nvim-lspconfig',
-        'williamboman/mason.nvim',
-        'williamboman/mason-lspconfig.nvim'
+  }
+  use 'wakatime/vim-wakatime'
+  use({
+    "jose-elias-alvarez/null-ls.nvim",
+    requires = { "nvim-lua/plenary.nvim" },
+  })
+  use({ "lukas-reineke/indent-blankline.nvim" })
+  use({ "andweeb/presence.nvim" })
+  use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
+
+  use({
+    'Exafunction/codeium.vim',
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "hrsh7th/nvim-cmp",
     }
-    use 'lewis6991/gitsigns.nvim'
-    use { "akinsho/toggleterm.nvim", tag = '*' }
-    if packer_bootstrap then
-        require('packer').sync()
-    end
-    use { "hrsh7th/nvim-cmp",
-        requires = {
-            "hrsh7th/cmp-nvim-lsp", "onsails/lspkind-nvim", "L3MON4D3/LuaSnip"
-        }
-    }
-    use 'wakatime/vim-wakatime'
-    use({
-        "jose-elias-alvarez/null-ls.nvim",
-        requires = { "nvim-lua/plenary.nvim" },
-    })
-    use ({"lukas-reineke/indent-blankline.nvim"})
-    use({"andweeb/presence.nvim"})
-    use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
+  })
 end)
 
 
 local enabled_plugins = {
-    'lualine',
-    'bufferline',
-    'nvim-tree',
-    'treesitter',
-    'telescope',
-    'theme',
-    'lspconfig',
-    'nvim-cmp',
-    'gitsigns',
-    'lazygit',
-    'null-ls',
-    'indent-blankline',
-    'nvim-ufo'
+  'lualine',
+  'bufferline',
+  'nvim-tree',
+  'treesitter',
+  'telescope',
+  'theme',
+  'lspconfig',
+  'nvim-cmp',
+  'gitsigns',
+  'lazygit',
+  'null-ls',
+  'indent-blankline',
+  'nvim-ufo',
+  'codeium',
 };
 for _, plugin in pairs(enabled_plugins) do
-    require('core.plugins.plugin_config.' .. plugin)
+  require('core.plugins.plugin_config.' .. plugin)
 end

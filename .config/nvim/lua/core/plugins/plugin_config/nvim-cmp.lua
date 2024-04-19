@@ -49,6 +49,7 @@ cmp.setup {
 
                     kind.kind = "[" .. (strings[1] or "") .. "]"
                     kind.menu = (icons[strings[2]] or "") .. " " .. (strings[2] or "")
+                    kind.symbol_map = {Codeium = ""}
                     return kind
                 end
     },
@@ -77,7 +78,7 @@ cmp.setup {
             c = cmp.mapping.close()
         }
     },
-    sources = { { name = 'nvim_lsp' }, { name = 'luasnip' } },
+    sources = {{ name='codeium' }, { name = 'nvim_lsp' }, { name = 'luasnip' } },
     window = {
         completion = cmp.config.window.bordered({
             border = "rounded",

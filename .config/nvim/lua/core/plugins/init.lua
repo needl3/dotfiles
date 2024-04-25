@@ -47,29 +47,15 @@ require('packer').startup(function(use)
   })
   use({ "lukas-reineke/indent-blankline.nvim" })
   use({ "andweeb/presence.nvim" })
-  use {
-    'xeluxee/competitest.nvim',
-    requires = { 'MunifTanjim/nui.nvim' },
-  }
-  --[[
-  use {
-    "Exafunction/codeium.nvim",
+  use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
+
+  use({
+    'Exafunction/codeium.vim',
     requires = {
       "nvim-lua/plenary.nvim",
       "hrsh7th/nvim-cmp",
-    },
-    config = function()
-      require("codeium").setup({
-      })
-    end
-  }
-  ]]--
-  use {
-    'numToStr/Comment.nvim',
-    config = function()
-      require('Comment').setup()
-    end
-  }
+    }
+  })
 end)
 
 
@@ -86,8 +72,8 @@ local enabled_plugins = {
   'lazygit',
   'null-ls',
   'indent-blankline',
-  'compitest',
-  'comment'
+  'nvim-ufo',
+  'codeium',
 };
 for _, plugin in pairs(enabled_plugins) do
   require('core.plugins.plugin_config.' .. plugin)

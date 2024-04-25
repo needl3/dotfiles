@@ -40,9 +40,22 @@ export LS_COLORS
 
 # Aliases with color
 alias ls="ls --color"
+alias cds="cd ~/coding/job/stf-web"
+alias cdd="cd ~/gitClones/dotfiles"
 
 f(){
 	find $1 -type f 2> /dev/null | grep -i $2
+}
+
+yay(){
+  pushd .
+  cd /tmp
+  git clone https://aur.archlinux.org/$1
+  cd $1
+  makepkg -si
+  cd ..
+  rm -rf /tmp/$1
+  popd
 }
 
 downloadMusic()
@@ -58,11 +71,11 @@ downloadMusic()
 }
 _JAVA_AWT_WM_NONREPARENTING=1
 export _JAVA_AWT_WM_NONREPARENTING=1
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-. "$HOME/.cargo/env"
 neofetch --config $HOME/.config/neofetch/config-bashrc.conf
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
+
+eval "$(rbenv init - bash)"
+source /usr/share/nvm/init-nvm.sh

@@ -1,4 +1,3 @@
-stylesheet='./power/style.css'
 mode=dmenu
 width=1
 matching=contains
@@ -6,4 +5,3 @@ insensitive=true
 allow_markup=true
 prompt=Supp?
 content_halign=center
-

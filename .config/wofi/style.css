@@ -1,65 +1,78 @@
-@import "/home/siyo/.config/themes/catppuccin-macchiato.css";
+@define-color background #282a36;
+@define-color foreground #f8f8f2;
+@define-color cursorColor #f8f8f2;
+@define-color accent #8E5EBC;
+@define-color color0 #14141b;
+@define-color color1 #FF5555;
+@define-color color2 #50FA7B;
+@define-color color3 #F1FA8C;
+@define-color color4 #BD93F9;
+@define-color color5 #FF79C6;
+@define-color color6 #8BE9FD;
+@define-color color7 #BFBFBF;
+@define-color color8 #4D4D4D;
+@define-color color9 #FF6E67;
+@define-color color10 #5AF78E;
+@define-color color11 #F4F99D;
+@define-color color12 #CAA9FA;
+@define-color color13 #FF92D0;
+@define-color color14 #9AEDFE;
+@define-color color15 #E6E6E6;
 
 window {
-  margin: 5px;
-  background-color: @crust;
-  opacity: 0.9;
-  border-radius: 10;
-}
-
-#outer-box {
-  margin: 5px;
-  /* border: 2px solid @maroon; */
-  background-color: @mantle;
-  border-radius: 10;
+  margin: 0px;
+  background-color: @background;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.3);
+  border-width: 2px;
+  border-radius: 4px;
+  font-family: Cantarell;
+  font-size: 10pt;
+  font-weight: bold;
 }
 
 #input {
-  margin: 5px;
-  border: 2px solid @lavender;
-  background-color: @surface0;
-  color: #f8f8f2;
-  font-size: 18px;
+  padding: 7px;
+  margin: 0px;
+  background-color: @accent;
+  border-color: @color0;
+  border: 1;
+  color: @foreground;
+  border-width: 2px;
+  border-radius: 4px 4px 0px 0px;
+  border-color: @background;
 }
 
 #inner-box {
-  margin: 5px;
-  background-color: @base;
+  margin: 0px;
+  border-width: 0px;
+  background-color: @background;
+}
+
+#outer-box {
+  padding: 0px;
+  border-style: solid;
+  border-color: blue;
+  border-width: 0px 0px 0px 0px;
+  border-radius: 10px;
 }
 
 #scroll {
   margin: 5px;
-  border: 2px solid @pink;
-  background-color: @base;
-  font-size: 16px;
-  color: #f8f8f2;
-  border-radius: 10;
-}
-
-#scroll label {
-  margin: 2px 0px;
-}
-
-#entry {
-  background-color: @base;
-}
-#entry:selected {
-  background-color: @surface1;
-  border: 2px solid @mauve;
-}
-
-#img {
-  margin: 5px;
-}
-#img:selected {
-  background-color: @surface1;
+  border: 0px solid orange;
+  background-color: @background;
 }
 
 #text {
   margin: 5px;
-  border: none;
-  color: @text;
+  padding: 5px;
+  border-radius: 13px;
+  color: @foreground;
 }
-#text:selected {
-  background-color: @surface1;
+
+#entry:selected {
+  background-color: @color0;
+  border-radius: 13px;
+  margin: 5px;
+  padding: 5px;
 }

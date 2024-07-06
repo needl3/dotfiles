@@ -56,6 +56,10 @@ require('packer').startup(function(use)
       "hrsh7th/nvim-cmp",
     }
   })
+
+  use({
+  'stevearc/aerial.nvim'
+  })
 end)
 
 
@@ -74,6 +78,7 @@ local enabled_plugins = {
   'indent-blankline',
   'nvim-ufo',
   'codeium',
+  'aerial',
 };
 for _, plugin in pairs(enabled_plugins) do
   require('core.plugins.plugin_config.' .. plugin)

@@ -1,5 +1,3 @@
-vim.g.mapleader = " "
-
 local set = vim.opt
 set.hidden = true
 set.encoding = "utf-8"

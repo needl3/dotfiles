@@ -1,3 +1,5 @@
+vim.g.mapleader = " "
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -6,7 +8,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
+      { out,                            "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -18,8 +20,22 @@ vim.opt.rtp:prepend(lazypath)
 -- Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.
 -- This is also a good place to setup other settings (vim.opt)
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
+local set = vim.opt
+set.hidden = true
+set.encoding = "utf-8"
+set.cursorline = true
+set.number = true
+set.scrolloff = 0
+set.mouse = a
+set.tabstop = 8
+set.softtabstop = 0
+set.expandtab = true
+set.shiftwidth = 2
+set.smarttab = true
+set.autoread = true
+set.startofline = true
+set.endofline = true
+
 
 -- Setup lazy.nvim
 require("lazy").setup({

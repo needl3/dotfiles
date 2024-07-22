@@ -22,7 +22,7 @@
 }
 
 #waybar {
-  font-family: "Iosevka", "Source Code Pro", sans-serif;
+  font-family: "Iosevka Nerd Font", "Source Code Pro", sans-serif;
   font-size: 1em;
   font-weight: 400;
   color: @base04;

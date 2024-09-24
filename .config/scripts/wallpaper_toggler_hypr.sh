@@ -10,7 +10,7 @@
 	# Store the array and pointer to /tmp/wallpaper
 	# Repeat If clause
 
-WALLPAPER_DIR="../../.wallpaper"
+WALLPAPER_DIR=$HOME/.wallpaper
 
 changeWallpaper()
 {

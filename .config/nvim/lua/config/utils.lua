@@ -9,10 +9,10 @@ return {
         end,
     },
     colorscheme = {
-        default = "gruvbox",
+        default = "retrobox",
         select = function()
             vim.ui.select({
-                "gruvbox",
+                "retrobox",
             }, { prompt = "Select colorscheme" }, function(choice)
                 vim.cmd.colorscheme(choice)
             end)

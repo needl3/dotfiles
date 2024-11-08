@@ -12,7 +12,6 @@
       // Put key bindings here if you want them to work in normal & visual mode.
       "space f": "editor::Format",
       "space e": "diagnostics::Deploy",
-      "shift-p": "file_finder::Toggle",
       "ctrl-b": "workspace::ToggleLeftDock",
       "ctrl-shift-b": "workspace::ToggleRightDock",
       "space a": "outline::Toggle",
@@ -28,7 +27,8 @@
       "g r h": "editor::RevertSelectedHunks",
       "-": "editor::Fold",
       "space": "editor::UnfoldLines",
-      "space g": "task::Spawn"
+      "space g": "task::Spawn",
+      "ctrl-k": "editor::SelectNext"
     }
   },
   {
@@ -49,6 +49,31 @@
       // Put key bindings here (in addition to the context above) if you want them to
       // work when no editor exists.
       // "space f": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "Editor && (showing_code_actions || showing_completions)",
+    "bindings": {
+      "up": "editor::ContextMenuPrev",
+      "ctrl-j": "editor::ContextMenuPrev",
+      "down": "editor::ContextMenuNext",
+      "ctrl-k": "editor::ContextMenuNext",
+      "pageup": "editor::ContextMenuFirst",
+      "pagedown": "editor::ContextMenuLast"
+    }
+  },
+  {
+    "context": "Picker || menu",
+    "bindings": {
+      "ctrl-j": "menu::SelectPrev",
+      "ctrl-k": "menu::SelectNext",
+      "ctrl-l": "menu::SelectNext"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "shift-p": "file_finder::Toggle"
     }
   }
 ]

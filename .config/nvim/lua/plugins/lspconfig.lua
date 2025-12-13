@@ -7,7 +7,6 @@ return {
     "nvim-cmp",
   },
   config = function()
-    local lsp_config = require("lspconfig")
     require("lspconfig.ui.windows").default_options.border = "rounded"
     require("mason").setup()
 
@@ -32,63 +31,34 @@ return {
       setKeymap("n", "]d", vim.diagnostic.goto_next, bufopts)
     end
 
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
+    local capabilities = require('cmp_nvim_lsp').default_capabilities() 
 
-    local servers = require('mason-lspconfig').get_installed_servers()
-    for _, server in pairs(servers) do
-      lsp_config[server].setup {
-        on_attach = on_attach,
-        capabilities = capabilities
-      }
-    end
+    require('mason-lspconfig').setup({
+        -- List the servers you want Mason to ensure are installed
+        ensure_installed = { "lua_ls", "tsserver", "rust_analyzer" }, -- Add your main LSPs here
 
-    local util = require 'lspconfig.util'
-    local lsp = vim.lsp
+        -- This callback runs for every installed server found by mason
+        -- and automatically passes it to lspconfig.setup.
+        handlers = {
+            -- The default handler sets up all servers installed via Mason
+            -- using the capabilities and on_attach we provide.
+            function(server_name)
+                require('lspconfig')[server_name].setup {
+                    on_attach = on_attach,
+                    capabilities = capabilities,
+                }
+            end,
 
-    local function fix_all(opts)
-      opts = opts or {}
-
-      local eslint_lsp_client = util.get_active_client_by_name(opts.bufnr, 'eslint')
-      if eslint_lsp_client == nil then
-        return
-      end
-
-      local request
-      if opts.sync then
-        request = function(bufnr, method, params)
-          eslint_lsp_client.request_sync(method, params, nil, bufnr)
-        end
-      else
-        request = function(bufnr, method, params)
-          eslint_lsp_client.request(method, params, nil, bufnr)
-        end
-      end
-
-      local bufnr = util.validate_bufnr(opts.bufnr or 0)
-      request(0, 'workspace/executeCommand', {
-        command = 'eslint.applyAllFixes',
-        arguments = {
-          {
-            uri = vim.uri_from_bufnr(bufnr),
-            version = lsp.util.buf_versions[bufnr],
-          },
+            -- Dedicated handler for OmniSharp (if needed)
+            ["omnisharp"] = function()
+                require('lspconfig').omnisharp.setup({
+                    on_attach = on_attach,
+                    capabilities = capabilities,
+                    -- Your specific OmniSharp command arguments
+                    cmd = { "OmniSharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
+                })
+            end,
         },
-      })
-    end
-
-    local root_file = {
-      '.eslintrc',
-      '.eslintrc.js',
-      '.eslintrc.cjs',
-      '.eslintrc.yaml',
-      '.eslintrc.yml',
-      '.eslintrc.json',
-      'eslint.config.js',
-      'eslint.config.mjs',
-      'eslint.config.cjs',
-      'eslint.config.ts',
-      'eslint.config.mts',
-      'eslint.config.cts',
-    }
+    })
   end
 }
